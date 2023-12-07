@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardType } from "@/objects/types";
 import Image from "next/image";
-import backImage from '@/assets/cards/back.svg';
+import backImage from '@/public/cards/back.svg';
 
 const Card = (card: CardType) => {
   let suits = ["spades", "hearts", "clubs", "diamonds"];
@@ -9,7 +9,7 @@ const Card = (card: CardType) => {
 
   let imagePath = backImage;
   if (card.value !== 0 && card.suit !== 0) {
-    imagePath = require(`@/assets/cards/${suits[card.suit - 1]}_${values[card.value - 1]}.svg`).default;
+    imagePath = require(`@/public/cards/${suits[card.suit - 1]}_${values[card.value - 1]}.svg`).default;
   }
 
   return (
