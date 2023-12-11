@@ -10,9 +10,9 @@ const Board = (board: BoardType) => {
     cards.push(<Card suit = {card.suit} value={card.value} status={card.status}/>)
   }
   return (
-    <div style={{width: "50em"}}>
+    <div className='w-[50rem]'>
       <div>Board</div>
-      <div style={{display: "flex", justifyContent: "space-around", alignItems: "center"}}>
+      <div className='flex justify-around items-center' >
         {cards.map((card) => {
           return card;
         })}

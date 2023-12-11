@@ -4,6 +4,7 @@ import Card from "@/components/Card";
 import { Deck } from "@/objects/deck";
 import { Game } from "@/objects/game";
 import {BoardType, CardType} from "@/objects/types";
+import Nav from "@/components/Nav";
 
 export default function Home() {
   let game = new Game();
@@ -17,7 +18,7 @@ export default function Home() {
 
   return (
       <>
-        <div>Hand Hunch</div>
+        <Nav />
         {boards.map((board) => {
           return board;
         })}
