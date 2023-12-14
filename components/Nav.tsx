@@ -1,12 +1,24 @@
 import React from 'react'
 import { IoIosHelpCircleOutline, IoIosStats, IoIosSettings } from "react-icons/io";
-
+import { BsSuitSpade, BsSuitSpadeFill } from "react-icons/bs";
 
 const Nav = () => {
   return (
     <>
       <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-gray-200'>
-        <div></div>
+        <div>
+          <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
+            <li>
+              <BsSuitSpadeFill className='h-[30px] w-[30px]' />
+            </li>
+            <li>
+              <BsSuitSpade className='h-[30px] w-[30px]' />
+            </li>
+            <li>
+              <BsSuitSpadeFill className='h-[30px] w-[30px]' />
+            </li>
+          </ul>
+        </div>
         <h1 className='self-center font-bold text-black text-3xl'>Hand Hunch</h1>
         <div
           className='font-light text-red-900'

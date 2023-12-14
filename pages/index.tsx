@@ -11,7 +11,7 @@ export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
   const [boards, setBoards] = useState<BoardType[]>([]);
   const [guess, setGuess] = useState<GuessType>();
-  const [handStrangth, setHandStrength] = useState<string>('');
+  const [handStrength, setHandStrength] = useState<string>('');
 
 
   useEffect(() => {
@@ -23,6 +23,12 @@ export default function Home() {
 
   }
 
+  const deal = () => {
+    game.deal();
+    setGame(game);
+    console.log(game);
+    setBoards([...game.boards]);
+  }
 
   // for (let i = 0; i < game.boards.length; i++) {
   //   let board = game.boards[i];
@@ -32,19 +38,12 @@ export default function Home() {
   return (
       <>
         <Nav />
-        {/*{boards.map((board, index) => {*/}
-        {/*  return <Board key={index} {...board} />*/}
-        {/*})}*/}
         {boards.map((board, index) => {
-          return <Row key={index} board={board} strength={"High Card"}/>
+          return <Row key={index} board={board} hand={game.hand}/>
         })}
         <button className='fixed bottom-10 left-1/2 font-extrabold text-4xl'
           onClick={() => {
-          const newGame = new Game();
-          newGame.boards = [...game.boards];
-          newGame.deal();
-          setGame(newGame);
-          setBoards(newGame.boards);
+          deal();
         }}>Deal</button>
       </>
   )
