@@ -15,9 +15,12 @@ export class Game {
   guesses: GuessType[];
   deal() {
     this.boards.push(new BoardType(this.deck.deal(5) as CardType[]));
+    console.log(this.boards)
   }
 
   guess(guess: GuessType) {
     this.guesses.push(guess);
   }
+
+
 }
