@@ -13,8 +13,8 @@ const Card = (card: CardType) => {
   }
 
   return (
-    <div className='flex justify-center'>
-      <Image src={imagePath} alt={imagePath} className={'h-1/2 w-1/2'}/>
+    <div className='flex justify-center w-20 border-2 rounded-md border-black'>
+      <Image src={imagePath} alt={imagePath} />
     </div>
   );
 };

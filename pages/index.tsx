@@ -36,7 +36,7 @@ export default function Home() {
   // }
 
   return (
-      <>
+    <div className='bg-green-700 h-screen'>
         <Nav />
         {boards.map((board, index) => {
           return <Row key={index} board={board} hand={game.hand}/>
@@ -45,6 +45,6 @@ export default function Home() {
           onClick={() => {
           deal();
         }}>Deal</button>
-      </>
+    </div>
   )
 }

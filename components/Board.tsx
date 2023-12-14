@@ -11,7 +11,7 @@ const Board = (board: BoardType) => {
   }
   return (
     <div className='w-[50rem]'>
-      <div className='flex justify-center items-center' >
+      <div className='flex justify-center gap-7 items-center' >
         {cards.map((card) => {
           return card;
         })}
