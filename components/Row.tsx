@@ -1,7 +1,8 @@
 import React from 'react';
 import Board from "@/components/Board";
 import Guess from "@/components/Guess";
-import {BoardType, GuessType, HandType} from "@/objects/types";
+import { BoardType, GuessType, HandType } from "@/objects/types";
+import { motion } from "framer-motion";
 
 type rowProps = {
   board: BoardType,
@@ -12,11 +13,22 @@ type rowProps = {
 const Row = ({board, hand, guess, onCardClick}: rowProps) => {
   let strength = evaluate(board, hand);
   return (
-    <div className='flex justify-evenly w-[100%] p-4'>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: .4, delay: 0 }}
+      className='flex justify-evenly w-[100%] p-4'
+    >
       {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
       {board && board.cards ? <Board board={board}/> : null}
       <div className='self-center text-center font-extrabold text-2xl w-[15rem]'>{strength}</div>
-    </div>
+    </motion.div>
+  //
+  // <div className='flex justify-evenly w-[100%] p-4' >
+  //   {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
+  //   {board && board.cards ? <Board board={board}/> : null}
+  //   <div className='self-center text-center font-extrabold text-2xl w-[15rem]'>{strength}</div>
+  // </div>
   );
 };
 

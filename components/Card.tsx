@@ -5,14 +5,15 @@ import backImage from '@/public/cards/back.svg';
 
 type CardProps = {
   card: CardType;
+  isFlipped: boolean;
 }
 
-const Card = ({card}: CardProps) => {
+const Card = ({card, isFlipped=false}: CardProps) => {
   let suits = ["spades", "hearts", "clubs", "diamonds"];
   let values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"];
 
   let imagePath = backImage;
-  if (card.value !== 0 && card.suit !== 0) {
+  if (card.value !== 0 && card.suit !== 0 && isFlipped) {
     imagePath = require(`@/public/cards/${suits[card.suit - 1]}_${values[card.value - 1]}.svg`).default;
   }
 
