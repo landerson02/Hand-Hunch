@@ -1,9 +1,13 @@
 import React from 'react';
-import { CardType } from "@/objects/types";
+import { CardType, CardStatus } from "@/objects/types";
 import Image from "next/image";
 import backImage from '@/public/cards/back.svg';
 
-const Card = (card: CardType) => {
+type CardProps = {
+  card: CardType;
+}
+
+const Card = ({card}: CardProps) => {
   let suits = ["spades", "hearts", "clubs", "diamonds"];
   let values = ["ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"];
 

@@ -1,17 +1,20 @@
 import React from 'react';
 import Board from "@/components/Board";
-import {BoardType, HandType} from "@/objects/types";
+import Guess from "@/components/Guess";
+import {BoardType, GuessType, HandType} from "@/objects/types";
 
 type rowProps = {
   board: BoardType,
   hand: HandType
+  guess: GuessType
+  onCardClick: (index: number) => void;
 }
-const Row = ({board, hand}: rowProps) => {
+const Row = ({board, hand, guess, onCardClick}: rowProps) => {
   let strength = evaluate(board, hand);
   return (
     <div className='flex justify-evenly w-[100%] p-4'>
-      <div className='self-center font-extrabold text-2xl'>GUESS</div>
-      {board && board.cards ? <Board cards={board.cards}/> : null}
+      {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
+      {board && board.cards ? <Board board={board}/> : null}
       <div className='self-center text-center font-extrabold text-2xl w-[15rem]'>{strength}</div>
     </div>
   );
