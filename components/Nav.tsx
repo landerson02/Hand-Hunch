@@ -1,25 +1,32 @@
 import React from 'react'
 import { IoIosHelpCircleOutline, IoIosStats, IoIosSettings } from "react-icons/io";
-import { BsSuitSpade, BsSuitSpadeFill } from "react-icons/bs";
+import { BsSuitSpadeFill, BsSuitClubFill, BsSuitDiamondFill, BsSuitHeartFill } from "react-icons/bs";
+import logo from '@/public/HandHunchLogoTransparent.png';
+import Image from "next/image";
 
 const Nav = () => {
   return (
     <>
-      <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-gray-300'>
+      <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-white border-b border-gray-800'>
         <div>
           <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
-            <li className={"p-2"}>
+            <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
               <BsSuitSpadeFill className='h-[30px] w-[30px]' />
             </li>
-            <li className={"p-2"}>
-              <BsSuitSpade className='h-[30px] w-[30px]' />
+            <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
+              <BsSuitHeartFill className='h-[30px] w-[30px]' />
             </li>
-            <li className={"p-2"}>
-              <BsSuitSpadeFill className='h-[30px] w-[30px]' />
+            <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
+              <BsSuitClubFill className='h-[30px] w-[30px]' />
+            </li>
+            <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
+              <BsSuitDiamondFill className='h-[30px] w-[30px]' />
             </li>
           </ul>
         </div>
-        <h1 className='self-center text-black text-5xl'>Hand Hunch</h1>
+        <a className='flex align-middle justify-center hover:-translate-y-1 transition-transform w-[15%]' href=''>
+          <Image src={logo} alt={"Logo"} className={"self-center"}/>
+        </a>
         <div
           className='font-light text-red-900'
           style={{
