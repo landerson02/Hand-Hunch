@@ -27,7 +27,7 @@ const Board = ({board}: BoardProps) => {
 
   return (
     <div className='w-[50rem]'>
-      <div className='flex justify-center gap-7 items-center'>
+      <div className='flex justify-center md:gap-7 items-center'>
         {board.cards.map((card,index) => {
           return (
             <motion.div

@@ -17,7 +17,7 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: .4, delay: 0 }}
-      className='flex justify-evenly w-[100%] p-1 pr-32 pl-32'
+      className='flex flex-col md:flex-row items-center justify-evenly w-[100%] p-1 pr-32 pl-32'
     >
       {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
       {board && board.cards ? <Board board={board}/> : null}
