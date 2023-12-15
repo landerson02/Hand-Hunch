@@ -112,6 +112,19 @@ export default function Home() {
     // }
   }
 
+  const resetGame = () => {
+    const newGame = new Game();
+    setGame(newGame);
+    setBoards([...newGame.boards]);
+    setGuesses([...newGame.guesses]);
+    setHand([...newGame.hand.cards]);
+    setCurIteration(0);
+    setWin(false);
+    setIsGameOver(false);
+    setIsCardSelectOpen(false);
+    setIsGameOverOpen(false);
+  }
+
   return (
     <div className='bg-green-700 h-screen'>
       <div className={"absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center align-middle z-0"}>
@@ -129,7 +142,7 @@ export default function Home() {
           onSubmitGuess();
         }}>Submit Guess</button>}
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
-      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1}/>}
+      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1} resetGame={resetGame}/>}
       <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
     </div>
   )
