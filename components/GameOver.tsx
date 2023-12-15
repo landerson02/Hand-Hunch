@@ -60,7 +60,7 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, hand, win, 
             <Card card={hand[0]} isFlipped={true}/>
           </div>
           <div className={statusColor}>
-            <Card card={hand[0]} isFlipped={true}/>
+            <Card card={hand[1]} isFlipped={true}/>
           </div>
         </div>
         <div className={"flex justify-evenly w-full p-2"}>
