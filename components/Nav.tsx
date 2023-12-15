@@ -8,13 +8,13 @@ const Nav = () => {
       <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-gray-300'>
         <div>
           <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
-            <li>
+            <li className={"p-2"}>
               <BsSuitSpadeFill className='h-[30px] w-[30px]' />
             </li>
-            <li>
+            <li className={"p-2"}>
               <BsSuitSpade className='h-[30px] w-[30px]' />
             </li>
-            <li>
+            <li className={"p-2"}>
               <BsSuitSpadeFill className='h-[30px] w-[30px]' />
             </li>
           </ul>

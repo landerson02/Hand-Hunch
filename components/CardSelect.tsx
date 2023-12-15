@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { BsSuitSpadeFill, BsSuitClubFill, BsSuitDiamondFill, BsSuitHeartFill } from "react-icons/bs";
-import {Game} from "@/objects/game";
 
 type CardSelectProps = {
   isOpen: boolean,
