@@ -10,9 +10,10 @@ type CardSelectProps = {
   hand: CardType[],
   win: boolean,
   iteration: number
+  resetGame: () => void
 }
 
-const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, hand, win, iteration } : CardSelectProps) => {
+const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : CardSelectProps) => {
   let message = "";
   let statusColor = "";
   if (win) {
@@ -60,11 +61,12 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, hand, win, 
             <Card card={hand[0]} isFlipped={true}/>
           </div>
           <div className={statusColor}>
-            <Card card={hand[0]} isFlipped={true}/>
+            <Card card={hand[1]} isFlipped={true}/>
           </div>
         </div>
         <div className={"flex justify-evenly w-full p-2"}>
           <button
+            onClick={resetGame}
             className={"text-2xl text-black font-bold hover:bg-green-600 " +
               "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
           >

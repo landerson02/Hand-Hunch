@@ -97,6 +97,19 @@ export default function Home() {
     setCurIteration(curIteration+1);
   }
 
+  const resetGame = () => {
+    const newGame = new Game();
+    setGame(newGame);
+    setBoards([...newGame.boards]);
+    setGuesses([...newGame.guesses]);
+    setHand([...newGame.hand.cards]);
+    setCurIteration(0);
+    setWin(false);
+    setIsGameOver(false);
+    setIsCardSelectOpen(false);
+    setIsGameOverOpen(false);
+  }
+
   return (
     <div className='bg-green-700 h-screen'>
       <Nav />
@@ -111,7 +124,7 @@ export default function Home() {
           onSubmitGuess();
         }}>Submit Guess</button>}
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
-      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1}/>}
+      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1} resetGame={resetGame}/>}
       <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
     </div>
   )
