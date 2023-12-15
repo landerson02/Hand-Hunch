@@ -31,6 +31,7 @@ const Board = ({board}: BoardProps) => {
         {board.cards.map((card,index) => {
           return (
             <motion.div
+              key = {index}
               initial={{rotateY: 180}}
               animate={{rotateY: 0}}
               transition={{delay: index*0.25 + .205}}

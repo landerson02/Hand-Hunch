@@ -9,8 +9,8 @@ type GuessProps = {
 
 const Guess = ({guess, onCardClick}: GuessProps) => {
   let cards = [];
-  cards.push(<Card card={guess.cards[0]} isFlipped={false}/>)
-  cards.push(<Card card={guess.cards[1]} isFlipped={false}/>)
+  cards.push(<Card card={guess.cards[0]} isFlipped={guess.cards[0].suit != 0 && guess.cards[0].value != 0}/>)
+  cards.push(<Card card={guess.cards[1]} isFlipped={guess.cards[1].suit != 0 && guess.cards[1].value != 0}/>)
 
   const statusColor: { [key in CardStatus]: string } = {
     [CardStatus.Unselected]: 'border-4 border-gray-100 border-opacity-0',

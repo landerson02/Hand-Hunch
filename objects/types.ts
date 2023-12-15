@@ -31,7 +31,7 @@ export class GuessType {
   constructor() {
     this.cards.push(new CardType());
     this.cards.push(new CardType());
-    this.selectedCardIndex = 0;
+    this.selectedCardIndex = -1;
     this.current = true;
   }
 
@@ -39,29 +39,26 @@ export class GuessType {
   selectedCardIndex: number;
   current: boolean;
 
-  // validateGuess(hand: HandType) {
-  //   if (this.cards[0].suit == this.cards[1].suit && this.cards[0].value == this.cards[1].value) {
-  //     throw new Error('Guess must contain 2 unique cards');
-  //   }
-  //   for (let i = 0; i < this.cards.length; i++) {
-  //     if (this.cards[i].suit == 0 || this.cards[i].value == 0) {
-  //       throw new Error('Guess must contain 2 cards');
-  //     }
-  //   }
-  //   for (let i = 0; i < this.cards.length; i++) {
-  //     if (this.cards[i].suit == hand.cards[i].suit && this.cards[0].value == hand.cards[0].value) {
-  //       this.cards[i].status = 3;
-  //     } else if (this.cards[i].suit == hand.cards[i].suit && this.cards[1].value == hand.cards[1].value) {
-  //       this.cards[i].status = 3;
-  //     } else if ((this.cards[i].suit == hand.cards[i].suit) !== (this.cards[0].value == hand.cards[0].value)) {
-  //       this.cards[i].status = 2;
-  //     } else if ((this.cards[i].suit == hand.cards[i].suit) !== (this.cards[1].value == hand.cards[1].value)) {
-  //       this.cards[i].status = 2;
-  //     } else {
-  //       this.cards[i].status = 1;
-  //     }
-  //   }
-  // }
+  validateGuess(hand: HandType) {
+    for (let i = 0; i < this.cards.length; i++) {
+      let card = this.cards[i];
+      if (
+        card.suit == hand.cards[0].suit && card.value == hand.cards[0].value ||
+        card.suit == hand.cards[1].suit && card.value == hand.cards[1].value
+      ) {
+        card.status = CardStatus.Green;
+        continue;
+      }
+      if (
+        card.suit == hand.cards[0].suit || card.value == hand.cards[0].value ||
+        card.suit == hand.cards[1].suit || card.value == hand.cards[1].value
+      ) {
+        card.status = CardStatus.Yellow;
+        continue;
+      }
+      card.status = CardStatus.Red;
+    }
+  }
 }
 
 export class HandType {
