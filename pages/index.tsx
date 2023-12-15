@@ -77,10 +77,12 @@ export default function Home() {
   return (
     <div className='bg-green-700 h-screen'>
         <Nav />
-        {boards.map((board, index) => {
-          return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
-        })}
-        <button className='fixed bottom-10 left-1/2 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
+        <div className='overflow-y-auto h-[77%] pt-2'>
+          {boards.map((board, index) => {
+            return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
+          })}
+        </div>
+        <button className='fixed bottom-5 left-1/2 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
           onClick={() => {
           onSubmitGuess();
         }}>Submit Guess</button>
