@@ -21,7 +21,14 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
     >
       {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
       {board && board.cards ? <Board board={board}/> : null}
-      <div className='self-center text-center font-extrabold text-2xl w-[15rem]'>{strength}</div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: .3, delay: 1.4 }}
+        className='self-center text-center font-extrabold text-2xl w-[15rem]'
+      >
+        {strength}
+      </motion.div>
     </motion.div>
   //
   // <div className='flex justify-evenly w-[100%] p-4' >

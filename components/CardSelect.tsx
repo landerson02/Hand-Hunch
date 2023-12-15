@@ -118,7 +118,13 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess } 
           </div>
           {warning ? <div className={"text-red-600 text-xs pt-2"}>Select a Suit and Value</div> : null}
         </div>
-        <button onClick={onSelect} className={"text-xl text-green-700 font-bold"}>Select</button>
+        <button
+          onClick={onSelect}
+          className={"text-2xl text-black font-bold hover:bg-green-600 " +
+            "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
+        >
+          Select
+        </button>
       </div>
     </Modal>
   );

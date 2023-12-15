@@ -19,7 +19,7 @@ const Nav = () => {
             </li>
           </ul>
         </div>
-        <h1 className='self-center font-bold text-black text-3xl'>Hand Hunch</h1>
+        <h1 className='self-center text-black text-5xl'>Hand Hunch</h1>
         <div
           className='font-light text-red-900'
           style={{

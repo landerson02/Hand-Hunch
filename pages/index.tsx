@@ -87,6 +87,7 @@ export default function Home() {
           onSubmitGuess();
         }}>Submit Guess</button>
         <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
+        <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
     </div>
   )
 }
