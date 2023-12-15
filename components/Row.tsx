@@ -14,7 +14,7 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
   let strength = evaluate(board, hand);
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 20, z: 1}}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: .4, delay: 0 }}
       className='flex flex-col md:flex-row items-center justify-evenly w-[100%] p-1 pr-32 pl-32'

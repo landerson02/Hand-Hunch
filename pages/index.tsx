@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Board from '../components/Board';
 import Card from "@/components/Card";
 import { Deck } from "@/objects/deck";
@@ -8,6 +8,8 @@ import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
 import GameOver from "@/components/GameOver";
+import logo from '@/public/HandHunchLogoCards.png';
+import Image from "next/image";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -20,12 +22,22 @@ export default function Home() {
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setGame(game);
     setBoards(game.boards);
     setGuesses(game.guesses);
     setHand(game.hand.cards);
   }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTo(0, scrollRef.current.scrollHeight - 560);
+        }
+    }
+  }, [boards]);
 
   const onCardSelect = (index: number) => {
     let guess = game.guesses[curIteration];
@@ -95,18 +107,24 @@ export default function Home() {
     setBoards([...game.boards]);
     setGuesses([...game.guesses]);
     setCurIteration(curIteration+1);
+    // if (scrollRef.current) {
+    //   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
+    // }
   }
 
   return (
     <div className='bg-green-700 h-screen'>
+      <div className={"absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center align-middle z-0"}>
+        <Image src={logo} alt={"Logo"} className={"opacity-40"}/>
+      </div>
       <Nav />
-      <div className='overflow-y-auto h-[77%] pt-2'>
+      <div className='overflow-y-auto h-[77%] pt-2 z-1' ref={scrollRef}>
         {boards.map((board, index) => {
           return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
         })}
       </div>
       {!isGameOver && <button
-        className='fixed bottom-5 left-1/2 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
+        className='fixed bottom-5 left-1/2  z-1 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
         onClick={() => {
           onSubmitGuess();
         }}>Submit Guess</button>}
