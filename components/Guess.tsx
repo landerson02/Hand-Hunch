@@ -14,10 +14,10 @@ const Guess = ({guess, onCardClick}: GuessProps) => {
 
   const statusColor: { [key in CardStatus]: string } = {
     [CardStatus.Unselected]: 'border-4 border-gray-100 border-opacity-0',
-    [CardStatus.Selected]: 'border-4 border-gray-100 border-opacity-90 rounded',
-    [CardStatus.Red]: 'border-4 border-red-500 border-opacity-90 rounded',
-    [CardStatus.Yellow]: 'border-4 border-yellow-300 border-opacity-90 rounded',
-    [CardStatus.Green]: 'border-4 border-green-300 border-opacity-90 rounded'
+    [CardStatus.Selected]: 'border-4 border-gray-100 bg-gray-100 border-opacity-90 rounded',
+    [CardStatus.Red]: 'border-4 border-red-500 bg-red-500 border-opacity-90 rounded',
+    [CardStatus.Yellow]: 'border-4 border-yellow-300 bg-yellow-300 border-opacity-90 rounded',
+    [CardStatus.Green]: 'border-4 border-green-300 bg-green-300 border-opacity-90 rounded'
   };
 
   return (

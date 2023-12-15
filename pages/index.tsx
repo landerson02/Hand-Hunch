@@ -3,22 +3,28 @@ import Board from '../components/Board';
 import Card from "@/components/Card";
 import { Deck } from "@/objects/deck";
 import { Game } from "@/objects/game";
-import {BoardType, CardType, CardStatus, GuessType} from "@/objects/types";
+import {BoardType, CardType, CardStatus, GuessType, HandType} from "@/objects/types";
 import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
+import GameOver from "@/components/GameOver";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
   const [boards, setBoards] = useState<BoardType[]>([]);
-  const [guess, setGuesses] = useState<GuessType[]>([]);
+  const [guesses, setGuesses] = useState<GuessType[]>([]);
+  const [hand, setHand] = useState<CardType[]>([]);
   const [curIteration, setCurIteration] = useState<number>(0);
+  const [isWin, setWin] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(false);
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
+  const [isGameOverOpen, setIsGameOverOpen] = useState(false);
 
   useEffect(() => {
     setGame(game);
     setBoards(game.boards);
     setGuesses(game.guesses);
+    setHand(game.hand.cards);
   }, []);
 
   const onCardSelect = (index: number) => {
@@ -65,8 +71,25 @@ export default function Home() {
     setGuesses([...game.guesses]);
   }
 
+  const closeGameOver = () => {
+    setIsGameOverOpen(false);
+  }
+
   const deal = () => {
-    game.guesses[curIteration].current = false;
+    let guess = game.guesses[curIteration];
+    if (guess.cards[0].status == CardStatus.Green && guess.cards[1].status == CardStatus.Green) {
+      setWin(true);
+      setIsGameOverOpen(true);
+      setIsGameOver(true);
+      return;
+    }
+    if (curIteration == 5) {
+      setWin(false);
+      setIsGameOverOpen(true);
+      setIsGameOver(true);
+      return;
+    }
+    guess.current = false;
     game.deal();
     setGame(game);
     setBoards([...game.boards]);
@@ -76,18 +99,20 @@ export default function Home() {
 
   return (
     <div className='bg-green-700 h-screen'>
-        <Nav />
-        <div className='overflow-y-auto h-[77%] pt-2'>
-          {boards.map((board, index) => {
-            return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
-          })}
-        </div>
-        <button className='fixed bottom-5 left-1/2 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
-          onClick={() => {
+      <Nav />
+      <div className='overflow-y-auto h-[77%] pt-2'>
+        {boards.map((board, index) => {
+          return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
+        })}
+      </div>
+      {!isGameOver && <button
+        className='fixed bottom-5 left-1/2 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
+        onClick={() => {
           onSubmitGuess();
-        }}>Submit Guess</button>
-        <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
-        <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
+        }}>Submit Guess</button>}
+      <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
+      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1}/>}
+      <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
     </div>
   )
 }
