@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <title>Hand Hunch</title>
-        <link rel="icon" href="@/public/HandHunchFavicon.ico" />
+        <link rel="icon" href="/HandHunchFavicon.ico" />
       </Head>
       <body>
         <Main />
