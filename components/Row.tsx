@@ -17,15 +17,17 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
       initial={{ opacity: 0, y: 20, z: 1}}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: .4, delay: 0 }}
-      className='flex flex-col md:flex-row items-center justify-evenly w-[100%] p-1 pr-32 pl-32'
+      className='flex flex-col md:flex-row items-center justify-between w-[100%] p-1'
     >
-      {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
+      <div className={"w-[20%]"}>
+        {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
+      </div>
       {board && board.cards ? <Board board={board}/> : null}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: .3, delay: 1.4 }}
-        className='self-center text-center font-extrabold text-2xl w-[15rem]'
+        className='self-right text-center font-extrabold text-2xl w-[20%]'
       >
         {strength}
       </motion.div>

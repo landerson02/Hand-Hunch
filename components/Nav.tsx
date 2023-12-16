@@ -4,29 +4,43 @@ import { BsSuitSpadeFill, BsSuitClubFill, BsSuitDiamondFill, BsSuitHeartFill } f
 import logo from '@/public/HandHunchLogoTransparent.png';
 import Image from "next/image";
 
-const Nav = () => {
+type NavProps = {
+  openHelp: () => void,
+}
+
+const Nav = ({ openHelp } : NavProps) => {
   return (
     <>
       <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-white border-b border-gray-800'>
         <div>
           <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
-            <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
-              <BsSuitSpadeFill className='h-[30px] w-[30px]' />
-            </li>
-            <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
-              <BsSuitHeartFill className='h-[30px] w-[30px]' />
-            </li>
-            <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
-              <BsSuitClubFill className='h-[30px] w-[30px]' />
-            </li>
-            <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
-              <BsSuitDiamondFill className='h-[30px] w-[30px]' />
-            </li>
+            <a>
+              <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
+                <BsSuitSpadeFill className='h-[30px] w-[30px]' />
+              </li>
+            </a>
+            <a>
+              <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
+                <BsSuitHeartFill className='h-[30px] w-[30px]' />
+              </li>
+            </a>
+            <a>
+              <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
+                <BsSuitClubFill className='h-[30px] w-[30px]' />
+              </li>
+            </a>
+            <a>
+              <li className={"text-red-600 hover:-translate-y-1 transition-transform p-[1.5]"}>
+                <BsSuitDiamondFill className='h-[30px] w-[30px]' />
+              </li>
+            </a>
           </ul>
         </div>
-        <a className='flex align-middle justify-center hover:-translate-y-1 transition-transform w-[15%]' href=''>
-          <Image src={logo} alt={"Logo"} className={"self-center"}/>
-        </a>
+        <div className={"flex justify-center"}>
+          <a className='flex align-middle justify-center w-[15%] h-[90%]' href=''>
+            <Image src={logo} alt={"Logo"} className={"self-center"}/>
+          </a>
+        </div>
         <div
           className='font-light text-red-900'
           style={{
@@ -35,10 +49,10 @@ const Nav = () => {
         >
           <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
             <a
-              className='group'
+              className='group hover:cursor-pointer'
               title='Help'
               aria-label='Help'
-              href=''
+              onClick={openHelp}
             >
               <li className='text-black hover:-translate-y-1 transition-transform p-2' >
                 <IoIosHelpCircleOutline className='h-[30px] w-[30px]' />

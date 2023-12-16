@@ -10,6 +10,8 @@ import CardSelect from '@/components/CardSelect';
 import GameOver from "@/components/GameOver";
 import logo from '@/public/HandHunchLogoCards.png';
 import Image from "next/image";
+import Help from "@/components/Help";
+import ResetGame from "@/components/ResetGame";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -21,6 +23,8 @@ export default function Home() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isResetOpen, setIsResetOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +91,17 @@ export default function Home() {
     setIsGameOverOpen(false);
   }
 
+  const openHelp = () => {
+    setIsHelpOpen(true);
+  }
+  const closeHelp = () => {
+    setIsHelpOpen(false);
+  }
+
+  const closeReset = () => {
+    setIsResetOpen(false);
+  }
+
   const deal = () => {
     let guess = game.guesses[curIteration];
     if (guess.cards[0].status == CardStatus.Green && guess.cards[1].status == CardStatus.Green) {
@@ -130,17 +145,37 @@ export default function Home() {
       <div className={"absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center align-middle z-0"}>
         <Image src={logo} alt={"Logo"} className={"opacity-40"}/>
       </div>
-      <Nav />
-      <div className='overflow-y-auto h-[77%] pt-2 z-1' ref={scrollRef}>
-        {boards.map((board, index) => {
-          return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
-        })}
+      <Nav openHelp={openHelp}/>
+      <div className={"flex justify-center align-top h-[80%]"}>
+        <div className={"w-[80%] h-full"}>
+          <div className={"flex justify-between p-1"}>
+            <button
+                className='z-1 font-extrabold text-2xl bg-green-500 border-2 w-[20%] mt-2 py-2 border-black rounded-md
+                  hover:scale-105 transition duration-200 ease-in-out'
+                onClick={() => {
+                  onSubmitGuess();
+                }}>Submit Guess</button>
+            <button
+                className='z-1 font-extrabold text-2xl bg-red-500 border-2 border-black mt-2 rounded-md w-[20%] py-2
+                  hover:scale-105 transition duration-200 ease-in-out'
+                onClick={() => {
+                  if (!isGameOver) {
+                    setIsResetOpen(true);
+                  } else {
+                    resetGame();
+                  }
+                }}>Reset Game</button>
+          </div>
+          <div className='overflow-y-auto h-full mt-3 z-1 no-scrollbar' ref={scrollRef}>
+            {boards.map((board, index) => {
+              return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
+            })}
+          </div>
+        </div>
       </div>
-      {!isGameOver && <button
-        className='fixed bottom-5 left-1/2  z-1 font-extrabold text-4xl bg-green-500 border-2 border-black rounded-md px-4 py-2 transform -translate-x-1/2 hover:bg-green-600'
-        onClick={() => {
-          onSubmitGuess();
-        }}>Submit Guess</button>}
+
+      <ResetGame isOpen={isResetOpen} closeModal={closeReset} resetGame={resetGame}/>
+      <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1} resetGame={resetGame}/>}
       <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>

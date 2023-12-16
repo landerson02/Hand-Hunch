@@ -21,7 +21,7 @@ const Guess = ({guess, onCardClick}: GuessProps) => {
   };
 
   return (
-    <div className='w-[20rem] flex align-middle justify-center'>
+    <div className='w-[20rem] flex align-middle justify-left'>
       {/*<div className='self-center text-center font-extrabold text-2xl w-[15rem]'>Guess</div>*/}
       <div className='flex justify-center gap-7 items-center' >
         <div onClick={() => {

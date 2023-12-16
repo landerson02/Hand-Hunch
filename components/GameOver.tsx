@@ -4,7 +4,7 @@ import {IoIosClose} from "react-icons/io";
 import {CardStatus, CardType} from "@/objects/types";
 import Card from "@/components/Card";
 
-type CardSelectProps = {
+type GameOverProps = {
   isOpen: boolean,
   closeModal: () => void,
   hand: CardType[],
@@ -13,7 +13,7 @@ type CardSelectProps = {
   resetGame: () => void
 }
 
-const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : CardSelectProps) => {
+const CardSelect: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : GameOverProps) => {
   let message = "";
   let statusColor = "";
   if (win) {
