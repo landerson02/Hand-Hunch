@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {IoIosClose} from "react-icons/io";
+import {motion} from "framer-motion";
 
 type ResetProps = {
   isOpen: boolean,
@@ -8,7 +9,7 @@ type ResetProps = {
   resetGame: () => void
 }
 
-const CardSelect: React.FC<ResetProps> = ({ isOpen, closeModal, resetGame } : ResetProps) => {
+const ResetGame: React.FC<ResetProps> = ({ isOpen, closeModal, resetGame } : ResetProps) => {
   const customStyles = {
     content: {
       width: '35%', // adjust this value to change the width of the modal
@@ -30,10 +31,16 @@ const CardSelect: React.FC<ResetProps> = ({ isOpen, closeModal, resetGame } : Re
       style={customStyles}
       isOpen={isOpen}
       onRequestClose={closeModal}
-      contentLabel="Help"
+      contentLabel="Reset Game"
       ariaHideApp={false}
     >
-      <button onClick={closeModal} className={"absolute top-0 left-0"}><IoIosClose className={"text-red-600 w-12 h-12"}/></button>
+      <motion.button
+        onClick={closeModal}
+        className={"absolute top-0 left-0"}
+        whileHover={{ scale: 1.2 }}
+      >
+        <IoIosClose className={"text-red-600 w-12 h-12"}/>
+      </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className={"text-2xl font-semibold"}>New Game</div>
         <div className={"flex flex-col text-center"}>
@@ -61,4 +68,4 @@ const CardSelect: React.FC<ResetProps> = ({ isOpen, closeModal, resetGame } : Re
   );
 };
 
-export default CardSelect;
+export default ResetGame;

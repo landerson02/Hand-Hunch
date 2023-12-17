@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import {IoIosClose} from "react-icons/io";
 import {CardStatus, CardType} from "@/objects/types";
 import Card from "@/components/Card";
+import {motion} from "framer-motion";
 
 type GameOverProps = {
   isOpen: boolean,
@@ -13,7 +14,7 @@ type GameOverProps = {
   resetGame: () => void
 }
 
-const CardSelect: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : GameOverProps) => {
+const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : GameOverProps) => {
   let message = "";
   let statusColor = "";
   if (win) {
@@ -52,7 +53,13 @@ const CardSelect: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, it
       contentLabel="Game Over"
       ariaHideApp={false}
     >
-      <button onClick={closeModal} className={"absolute top-0 left-0"}><IoIosClose className={"text-red-600 w-12 h-12"}/></button>
+      <motion.button
+        onClick={closeModal}
+        className={"absolute top-0 left-0"}
+        whileHover={{ scale: 1.2 }}
+      >
+        <IoIosClose className={"text-red-600 w-12 h-12"}/>
+      </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className={"text-2xl font-semibold"}>Game Over</div>
         <div className={"text-xl font-semibold"}>{message}</div>
@@ -84,4 +91,4 @@ const CardSelect: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, it
   );
 };
 
-export default CardSelect;
+export default GameOver;

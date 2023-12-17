@@ -1,13 +1,14 @@
 import React from 'react';
 import Modal from 'react-modal';
 import {IoIosClose} from "react-icons/io";
+import {motion} from "framer-motion";
 
 type HelpProps = {
   isOpen: boolean,
   closeModal: () => void,
 }
 
-const CardSelect: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
+const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
   const customStyles = {
     content: {
       width: '40%', // adjust this value to change the width of the modal
@@ -32,10 +33,16 @@ const CardSelect: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => 
       contentLabel="Help"
       ariaHideApp={false}
     >
-      <button onClick={closeModal} className={"absolute top-0 left-0"}><IoIosClose className={"text-red-600 w-12 h-12"}/></button>
+      <motion.button
+        onClick={closeModal}
+        className={"absolute top-0 left-0"}
+        whileHover={{ scale: 1.2 }}
+      >
+        <IoIosClose className={"text-red-600 w-12 h-12"}/>
+      </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className={"text-2xl font-semibold"}>Help</div>
-        <div className={"flex-col w-full h-[75%] overflow-y-scroll"}>
+        <div className={"flex-col w-full h-[90%] overflow-y-scroll mb-2"}>
           <div className={"text-xl font-semibold text-center"}>Welcome to Hand Hunch!</div>
           <div className={"text-xl"}>Hand Hunch is a poker-inspired game where your goal is to guess the
             mystery Texas Hold'em hand consisting of two cards, based on the available information. Are you ready to
@@ -84,18 +91,18 @@ const CardSelect: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => 
             Enjoy Hand Hunch and Good Luck!
           </div>
         </div>
-        <div className={"flex justify-center w-full p-2"}>
-          <button
-            onClick={closeModal}
-            className={"text-2xl text-black font-bold hover:bg-red-500 " +
-              "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-red-400"}
-          >
-            Close
-          </button>
-        </div>
+        {/*<div className={"flex justify-center w-full p-2"}>*/}
+        {/*  <button*/}
+        {/*    onClick={closeModal}*/}
+        {/*    className={"text-2xl text-black font-bold hover:bg-red-500 " +*/}
+        {/*      "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-red-400"}*/}
+        {/*  >*/}
+        {/*    Close*/}
+        {/*  </button>*/}
+        {/*</div>*/}
       </div>
     </Modal>
   );
 };
 
-export default CardSelect;
+export default Help;

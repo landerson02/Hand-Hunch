@@ -27,9 +27,11 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: .3, delay: 1.4 }}
-        className='self-right text-center font-extrabold text-2xl w-[20%]'
+        className='flex self-right text-center font-extrabold text-2xl w-[20%] items-center justify-center'
       >
-        {strength}
+        <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-10 w-fit"}>
+          {strength}
+        </div>
       </motion.div>
     </motion.div>
   //

@@ -6,9 +6,10 @@ import Image from "next/image";
 
 type NavProps = {
   openHelp: () => void,
+  openSettings: () => void,
 }
 
-const Nav = ({ openHelp } : NavProps) => {
+const Nav = ({ openHelp, openSettings } : NavProps) => {
   return (
     <>
       <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-white border-b border-gray-800'>
@@ -60,10 +61,9 @@ const Nav = ({ openHelp } : NavProps) => {
             </a>
 
             <a
-              className='group'
+              className='group hover:cursor-pointer'
               title='Stats'
               aria-label='Stats'
-              href=''
             >
               <li className='text-black hover:-translate-y-1 transition-transform p-2'>
                 <IoIosStats className='h-[30px] w-[30px]' />
@@ -71,10 +71,10 @@ const Nav = ({ openHelp } : NavProps) => {
             </a>
 
             <a
-              className='group'
+              className='group hover:cursor-pointer'
               title='Settings'
               aria-label='Settings'
-              href=''
+              onClick={openSettings}
             >
               <li className='text-base-text hover:-translate-y-1 transition-transform p-2'>
                 <IoIosSettings className='h-[30px] w-[30px]' />

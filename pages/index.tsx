@@ -12,6 +12,8 @@ import logo from '@/public/HandHunchLogoCards.png';
 import Image from "next/image";
 import Help from "@/components/Help";
 import ResetGame from "@/components/ResetGame";
+import Settings from "@/components/Settings";
+import {SettingsObject} from "@/objects/settings";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -24,6 +26,9 @@ export default function Home() {
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [settings, setSettings]
+    = useState<SettingsObject>(new SettingsObject("bg-green-700", false));
   const [isResetOpen, setIsResetOpen] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -93,9 +98,22 @@ export default function Home() {
 
   const openHelp = () => {
     setIsHelpOpen(true);
+    setIsSettingsOpen(false);
   }
   const closeHelp = () => {
     setIsHelpOpen(false);
+  }
+
+  const openSettings = () => {
+    setIsSettingsOpen(true);
+    setIsHelpOpen(false);
+  }
+  const closeSettings = () => {
+    setIsSettingsOpen(false);
+  }
+  const applySettings = (settings: SettingsObject) => {
+    setSettings(settings);
+    setIsSettingsOpen(false);
   }
 
   const closeReset = () => {
@@ -118,6 +136,19 @@ export default function Home() {
     }
     guess.current = false;
     game.deal();
+    if (settings.lockedIn) {
+      let curGuess = game.guesses[curIteration + 1];
+      if (guess.cards[0].status == CardStatus.Green) {
+        curGuess.cards[0].suit = guess.cards[0].suit;
+        curGuess.cards[0].value = guess.cards[0].value;
+        curGuess.cards[0].status = CardStatus.Green;
+      }
+      if (guess.cards[1].status == CardStatus.Green) {
+        curGuess.cards[1].suit = guess.cards[1].suit;
+        curGuess.cards[1].value = guess.cards[1].value;
+        curGuess.cards[1].status = CardStatus.Green;
+      }
+    }
     setGame(game);
     setBoards([...game.boards]);
     setGuesses([...game.guesses]);
@@ -141,11 +172,11 @@ export default function Home() {
   }
 
   return (
-    <div className='bg-green-700 h-screen'>
+    <div className={`${settings.bgColor} h-screen`}>
       <div className={"absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center align-middle z-0"}>
         <Image src={logo} alt={"Logo"} className={"opacity-40"}/>
       </div>
-      <Nav openHelp={openHelp}/>
+      <Nav openHelp={openHelp} openSettings={openSettings}/>
       <div className={"flex justify-center align-top h-[80%]"}>
         <div className={"w-[80%] h-full"}>
           <div className={"flex justify-between p-1"}>
@@ -176,6 +207,7 @@ export default function Home() {
 
       <ResetGame isOpen={isResetOpen} closeModal={closeReset} resetGame={resetGame}/>
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
+      <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1} resetGame={resetGame}/>}
       <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
