@@ -11,10 +11,12 @@ type GameOverProps = {
   hand: CardType[],
   win: boolean,
   iteration: number
-  resetGame: () => void
+  resetGame: () => void,
+  openStats: () => void
 }
 
-const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame } : GameOverProps) => {
+const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iteration, resetGame, openStats } : GameOverProps) => {
+  // console.log(hand);
   let message = "";
   let statusColor = "";
   if (win) {
@@ -80,6 +82,7 @@ const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iter
             Play Again
           </button>
           <button
+            onClick={openStats}
             className={"text-2xl text-black font-bold hover:bg-green-600 " +
               "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
           >

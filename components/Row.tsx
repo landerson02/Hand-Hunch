@@ -9,9 +9,11 @@ type rowProps = {
   hand: HandType
   guess: GuessType
   onCardClick: (index: number) => void;
+  updateHandStrength: (handStrength: string) => void;
 }
-const Row = ({board, hand, guess, onCardClick}: rowProps) => {
+const Row = ({board, hand, guess, onCardClick, updateHandStrength}: rowProps) => {
   let strength = evaluate(board, hand);
+  updateHandStrength(strength);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, z: 1}}
@@ -27,9 +29,9 @@ const Row = ({board, hand, guess, onCardClick}: rowProps) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: .3, delay: 1.4 }}
-        className='flex self-right text-center font-extrabold text-2xl w-[20%] items-center justify-center'
+        className='flex self-right text-center font-semibold text-xl w-[20%] items-center justify-center'
       >
-        <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-10 w-fit"}>
+        <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-5 w-fit"}>
           {strength}
         </div>
       </motion.div>

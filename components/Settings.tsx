@@ -108,7 +108,7 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, closeModal, applySettings, 
           className={"text-2xl text-black font-bold hover:bg-green-600 " +
             "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
         >
-          Select
+          Apply
         </button>
       </div>
     </Modal>

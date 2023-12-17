@@ -14,6 +14,8 @@ import Help from "@/components/Help";
 import ResetGame from "@/components/ResetGame";
 import Settings from "@/components/Settings";
 import {SettingsObject} from "@/objects/settings";
+import Stats from "@/components/Stats";
+import {StatsObject} from "@/objects/stats";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -26,6 +28,8 @@ export default function Home() {
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isStatsOpen, setIsStatsOpen] = useState(false);
+  const [stats, setStats] = useState<StatsObject>(new StatsObject());
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settings, setSettings]
     = useState<SettingsObject>(new SettingsObject("bg-green-700", false));
@@ -97,16 +101,24 @@ export default function Home() {
   }
 
   const openHelp = () => {
+    closeAllModals();
     setIsHelpOpen(true);
-    setIsSettingsOpen(false);
   }
   const closeHelp = () => {
     setIsHelpOpen(false);
   }
 
+  const openStats = () => {
+    closeAllModals();
+    setIsStatsOpen(true);
+  }
+  const closeStats = () => {
+    setIsStatsOpen(false);
+  }
+
   const openSettings = () => {
+    closeAllModals();
     setIsSettingsOpen(true);
-    setIsHelpOpen(false);
   }
   const closeSettings = () => {
     setIsSettingsOpen(false);
@@ -116,8 +128,21 @@ export default function Home() {
     setIsSettingsOpen(false);
   }
 
+  const updateHandStrength = (handStrength: string) => {
+    stats.updateStrongestHand(handStrength);
+  }
+
   const closeReset = () => {
     setIsResetOpen(false);
+  }
+
+  const closeAllModals = () => {
+    setIsHelpOpen(false);
+    setIsStatsOpen(false);
+    setIsSettingsOpen(false);
+    setIsResetOpen(false);
+    setIsGameOverOpen(false);
+    setIsCardSelectOpen(false);
   }
 
   const deal = () => {
@@ -126,12 +151,16 @@ export default function Home() {
       setWin(true);
       setIsGameOverOpen(true);
       setIsGameOver(true);
+      stats.updateStats(true, curIteration);
+      setStats(stats);
       return;
     }
     if (curIteration == 5) {
       setWin(false);
       setIsGameOverOpen(true);
       setIsGameOver(true);
+      stats.updateStats(false, curIteration);
+      setStats(stats);
       return;
     }
     guess.current = false;
@@ -159,6 +188,10 @@ export default function Home() {
   }
 
   const resetGame = () => {
+    if (!isGameOver) {
+      stats.updateStats(false, curIteration);
+      setStats(stats);
+    }
     const newGame = new Game();
     setGame(newGame);
     setBoards([...newGame.boards]);
@@ -176,8 +209,8 @@ export default function Home() {
       <div className={"absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex justify-center align-middle z-0"}>
         <Image src={logo} alt={"Logo"} className={"opacity-40"}/>
       </div>
-      <Nav openHelp={openHelp} openSettings={openSettings}/>
-      <div className={"flex justify-center align-top h-[80%]"}>
+      <Nav openHelp={openHelp} openStats={openStats} openSettings={openSettings}/>
+      <div className={"flex justify-center align-top h-[75%]"}>
         <div className={"w-[80%] h-full"}>
           <div className={"flex justify-between p-1"}>
             <button
@@ -199,7 +232,8 @@ export default function Home() {
           </div>
           <div className='overflow-y-auto h-full mt-3 z-1 no-scrollbar' ref={scrollRef}>
             {boards.map((board, index) => {
-              return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]} onCardClick={onCardSelect}/>
+              return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]}
+                          onCardClick={onCardSelect} updateHandStrength={updateHandStrength}/>
             })}
           </div>
         </div>
@@ -207,9 +241,11 @@ export default function Home() {
 
       <ResetGame isOpen={isResetOpen} closeModal={closeReset} resetGame={resetGame}/>
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
+      <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats}/>
       <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
-      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin} iteration={curIteration + 1} resetGame={resetGame}/>}
+      {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
+                                       iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
       <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
     </div>
   )
