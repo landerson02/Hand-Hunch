@@ -31,7 +31,7 @@ export class StatsObject {
       }
       this.guessArray[guess]++;
       this.averageGuesses = (this.guessArray[0] + this.guessArray[1] * 2 + this.guessArray[2] * 3
-        + this.guessArray[3] * 4 + this.guessArray[4] * 5 + this.guessArray[5] * 6)/this.games;
+        + this.guessArray[3] * 4 + this.guessArray[4] * 5 + this.guessArray[5] * 6)/this.wins;
     } else {
       this.losses++;
       this.currentStreak = 0;
