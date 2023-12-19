@@ -34,6 +34,7 @@ export default function Home() {
   const [isResetOpen, setIsResetOpen] = useState(false);
   const [isStatsSaved, setIsStatsSaved] = useState(false);
   const [isGameSaved, setIsGameSaved] = useState(true);
+  const [isSettingsSaved, setIsSettingsSaved] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -70,6 +71,25 @@ export default function Home() {
       setIsStatsSaved(true);
     }
   }, [isGameOver, stats]);
+
+  // Load settings
+  useEffect(() => {
+    const settings = localStorage.getItem('settings');
+    if(settings) {
+      const parsed = JSON.parse(settings);
+      const newSettings = new SettingsObject("bg-green-700", false);
+      Object.assign(newSettings, parsed);
+      setSettings(newSettings);
+    }
+  }, []);
+
+  // Save settings
+  useEffect(() => {
+    if(!isSettingsSaved) {
+      localStorage.setItem('settings', JSON.stringify(settings));
+      setIsSettingsSaved(true);
+    }
+  }, [settings]);
 
   // Load current game
   useEffect(() => {
@@ -166,7 +186,9 @@ export default function Home() {
     setIsSettingsOpen(false);
   }
   const applySettings = (settings: SettingsObject) => {
-    setSettings(settings);
+    let newSettings = new SettingsObject(settings.bgColor, settings.lockedIn);
+    setSettings(newSettings);
+    setIsSettingsSaved(false);
     setIsSettingsOpen(false);
   }
 
