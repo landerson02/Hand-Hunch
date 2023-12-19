@@ -64,33 +64,63 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
         </div>
 
 
-        <div className={'flex flex-col w-full gap-2 mb-2'}>
+        <motion.div
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
+          // transition={{ delay: 0.2 }}
+          className={'flex flex-col w-full gap-2 mb-2'}
+        >
           {/*<div className='flex justify-around w-full'>*/}
           {/*  <div className='text-3xl font-extralight'>Strongest Hand: <span className={'font-bold'}>{stats.strongestHand}</span></div>*/}
           {/*</div>*/}
           <div className='flex justify-around w-full'>
-            <div className='flex flex-col justify-center items-center'>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className='flex flex-col justify-center items-center'
+            >
               <div className='text-5xl'>{stats.games}</div>
               <div className='text-xl'>Games</div>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className='flex flex-col justify-center items-center'
+            >
               <div className='text-5xl'>{(stats.winPercentage * 100).toFixed(0)}%</div>
               <div className='text-xl'>Win Rate</div>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className='flex flex-col justify-center items-center'
+            >
               <div className='text-5xl flex justify-center items-center'>{(stats.currentStreak)}<FaFire className='w-7 h-7 text-red-600'/></div>
               <div className='text-xl'>Current</div>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.8 }}
+              className='flex flex-col justify-center items-center'
+            >
               <div className='text-5xl flex justify-center items-center'>{(stats.longestStreak)}<FaFire className='w-7 h-7 text-black'/></div>
               <div className='text-xl'>Longest</div>
-            </div>
-            <div className='flex flex-col justify-center items-center'>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.0 }}
+              className='flex flex-col justify-center items-center'
+            >
               <div className='text-5xl'>{(stats.averageGuesses)}</div>
               <div className='text-xl'>Avg Guesses</div>
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </motion.div>
 
     </Modal>
