@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Game } from "@/objects/game";
-import { BoardType, CardType, CardStatus, GuessType } from "@/objects/types";
+import { BoardType, CardType, CardStatus} from "@/objects/types";
 import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
