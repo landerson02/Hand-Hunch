@@ -1,9 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
-import Board from '../components/Board';
-import Card from "@/components/Card";
-import { Deck } from "@/objects/deck";
 import { Game } from "@/objects/game";
-import {BoardType, CardType, CardStatus, GuessType, HandType} from "@/objects/types";
+import { BoardType, CardType, CardStatus, GuessType } from "@/objects/types";
 import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
@@ -13,14 +10,14 @@ import Image from "next/image";
 import Help from "@/components/Help";
 import ResetGame from "@/components/ResetGame";
 import Settings from "@/components/Settings";
-import {SettingsObject} from "@/objects/settings";
+import { SettingsObject } from "@/objects/settings";
 import Stats from "@/components/Stats";
-import {StatsObject} from "@/objects/stats";
+import { StatsObject } from "@/objects/stats";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
   const [boards, setBoards] = useState<BoardType[]>([]);
-  const [guesses, setGuesses] = useState<GuessType[]>([]);
+  // const [guesses, setGuesses] = useState<GuessType[]>([]);
   const [hand, setHand] = useState<CardType[]>([]);
   const [curIteration, setCurIteration] = useState<number>(0);
   const [isWin, setWin] = useState(false);
@@ -41,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     setGame(game);
     setBoards(game.boards);
-    setGuesses(game.guesses);
+    // setGuesses(game.guesses);
     setHand(game.hand.cards);
   }, []);
 
@@ -83,7 +80,7 @@ export default function Home() {
     guess.selectedCardIndex = index;
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     setIsCardSelectOpen(true);
   }
 
@@ -94,7 +91,7 @@ export default function Home() {
     guess.cards[guess.selectedCardIndex].status = CardStatus.Unselected;
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
   }
 
   const onSubmitGuess = () => {
@@ -105,7 +102,7 @@ export default function Home() {
     guess.validateGuess(game.hand);
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     deal();
   }
 
@@ -117,7 +114,7 @@ export default function Home() {
     guess.selectedCardIndex = -1;
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
   }
 
   const closeGameOver = () => {
@@ -210,7 +207,7 @@ export default function Home() {
     }
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     setCurIteration(curIteration+1);
     // if (scrollRef.current) {
     //   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
@@ -227,7 +224,7 @@ export default function Home() {
     const newGame = new Game();
     setGame(newGame);
     setBoards([...newGame.boards]);
-    setGuesses([...newGame.guesses]);
+    // setGuesses([...newGame.guesses]);
     setHand([...newGame.hand.cards]);
     setCurIteration(0);
     setWin(false);
@@ -279,7 +276,7 @@ export default function Home() {
       <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
                                        iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
-      <button onClick={deal} className='absolute fixed bottom-0 right-0'>DEAL</button>
+      <button onClick={deal} className='absolute bottom-0 right-0'>DEAL</button>
     </div>
   )
 }
