@@ -34,6 +34,7 @@ export default function Home() {
   const [settings, setSettings]
     = useState<SettingsObject>(new SettingsObject("bg-green-700", false));
   const [isResetOpen, setIsResetOpen] = useState(false);
+  const [isGameSaved, setIsGameSaved] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +52,29 @@ export default function Home() {
         }
     }
   }, [boards]);
+
+  // Load stats
+  useEffect(() => {
+    const stats = localStorage.getItem('stats');
+    if(stats) {
+      console.log('Loading stats');
+      console.log(stats);
+      const parsed = JSON.parse(stats);
+      const newStats = new StatsObject();
+      Object.assign(newStats, parsed);
+      setStats(newStats);
+      console.log('Loaded: ', newStats);
+    }
+  }, []);
+
+  // Save stats
+  useEffect(() => {
+    console.log('Saved: ', localStorage.getItem('stats'));
+    if(isGameOver && !isGameSaved) {
+      localStorage.setItem('stats', JSON.stringify(stats));
+      setIsGameSaved(true);
+    }
+  }, [isGameOver, stats]);
 
   const onCardSelect = (index: number) => {
     let guess = game.guesses[curIteration];
@@ -151,16 +175,22 @@ export default function Home() {
       setWin(true);
       setIsGameOverOpen(true);
       setIsGameOver(true);
-      stats.updateStats(true, curIteration);
-      setStats(stats);
+
+      const newStats = new StatsObject();
+      Object.assign(newStats, stats);
+      newStats.updateStats(true, curIteration);
+      setStats(newStats);
       return;
     }
     if (curIteration == 5) {
       setWin(false);
       setIsGameOverOpen(true);
       setIsGameOver(true);
-      stats.updateStats(false, curIteration);
-      setStats(stats);
+
+      const newStats = new StatsObject();
+      Object.assign(newStats, stats);
+      newStats.updateStats(false, curIteration);
+      setStats(newStats);
       return;
     }
     guess.current = false;
@@ -189,8 +219,10 @@ export default function Home() {
 
   const resetGame = () => {
     if (!isGameOver) {
-      stats.updateStats(false, curIteration);
-      setStats(stats);
+      const newStats = new StatsObject();
+      Object.assign(newStats, stats);
+      newStats.updateStats(false, curIteration);
+      setStats(newStats);
     }
     const newGame = new Game();
     setGame(newGame);
@@ -202,6 +234,7 @@ export default function Home() {
     setIsGameOver(false);
     setIsCardSelectOpen(false);
     setIsGameOverOpen(false);
+    setIsGameSaved(false);
   }
 
   return (

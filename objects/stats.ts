@@ -1,16 +1,4 @@
 export class StatsObject {
-  constructor() {
-    this.games = 0;
-    this.wins = 0;
-    this.losses = 0;
-    this.winPercentage = 0;
-    this.currentStreak = 0;
-    this.longestStreak = 0;
-    this.strongestHand = "N/A";
-    this.guessArray = [0, 0, 0, 0, 0, 0];
-    this.averageGuesses = 0;
-  }
-
   games: number;
   wins: number;
   losses: number;
@@ -20,6 +8,18 @@ export class StatsObject {
   strongestHand: string;
   guessArray: number[];
   averageGuesses: number;
+
+  constructor() {
+    this.games = 0;
+    this.wins = 0;
+    this.losses = 0;
+    this.winPercentage = 0;
+    this.currentStreak = 0;
+    this.longestStreak = 0;
+    this.strongestHand = "High Card";
+    this.guessArray = [0, 0, 0, 0, 0, 0];
+    this.averageGuesses = 0;
+  }
 
   updateStats(win: boolean, guess: number) {
     this.games++;
@@ -40,59 +40,22 @@ export class StatsObject {
   }
 
   updateStrongestHand(hand: string) {
-    if (hand == "Royal Flush") {
+    let StrengthMap = new Map<string, number>([
+      ["Royal Flush", 9],
+      ["Straight Flush", 8],
+      ["Four of a Kind", 7],
+      ["Full House", 6],
+      ["Flush", 5],
+      ["Straight", 4],
+      ["Three of a Kind", 3],
+      ["Two Pair", 2],
+      ["Pair", 1],
+      ["High Card", 0],
+    ]);
+    let handStrength = Number(StrengthMap.get(hand));
+    let strongestHandStrength = Number(StrengthMap.get(this.strongestHand));
+    if (handStrength > strongestHandStrength) {
       this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Straight Flush" && this.strongestHand != "Royal Flush") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Four of a Kind" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Full House" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Flush" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Straight" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House"
-      && this.strongestHand != "Flush") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Three of a Kind" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House"
-      && this.strongestHand != "Flush" && this.strongestHand != "Straight") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Two Pair" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House"
-      && this.strongestHand != "Flush" && this.strongestHand != "Straight" && this.strongestHand != "Three of a Kind") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (hand == "Pair" && this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-      && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House"
-      && this.strongestHand != "Flush" && this.strongestHand != "Straight" && this.strongestHand != "Three of a Kind"
-      && this.strongestHand != "Two Pair") {
-      this.strongestHand = hand;
-      return;
-    }
-    else if (this.strongestHand != "Royal Flush" && this.strongestHand != "Straight Flush"
-    && this.strongestHand != "Four of a Kind" && this.strongestHand != "Full House"
-    && this.strongestHand != "Flush" && this.strongestHand != "Straight" && this.strongestHand != "Three of a Kind"
-    && this.strongestHand != "Two Pair" && this.strongestHand != "Pair") {
-      this.strongestHand = hand;
-      return;
     }
   }
 }
