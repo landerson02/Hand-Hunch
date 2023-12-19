@@ -4,7 +4,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaFire } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { StatsObject } from "@/objects/stats";
-
+import { BarChart } from '@mui/x-charts/BarChart';
 
 type StatsProps = {
   isOpen: boolean,
@@ -44,37 +44,30 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
       >
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
-      {/*<div className={"flex flex-col items-center justify-between p-2 h-full"}>*/}
-      {/*  <div className={"text-2xl font-semibold"}>Stats</div>*/}
-      {/*  <div className={"flex justify-around w-full"}>*/}
-      {/*    <div className={"text-2xl"}>Games: {stats.games}</div>*/}
-      {/*    <div className={"text-2xl"}>Win Rate: {(stats.winPercentage * 100).toFixed(0)}%</div>*/}
-      {/*    <div className={"text-2xl"}>Average Guesses: {stats.averageGuesses.toFixed(2)}</div>*/}
-      {/*  </div>*/}
-      {/*  <div className={"flex justify-around w-full"}>*/}
-      {/*    <div className={"text-2xl"}>Current Streak: {stats.currentStreak}</div>*/}
-      {/*    <div className={"text-2xl"}>Longest Streak: {stats.longestStreak}</div>*/}
-      {/*  </div>*/}
-      {/*  <div className={"flex justify-around w-full"}>*/}
-      {/*    <div className={"text-2xl"}>Strongest Hand: {stats.strongestHand}</div>*/}
-      {/*  </div>*/}
-      {/*  <div className={"flex flex-col align-middle w-[90%] h-[45%] border-2 mb-10"}>*/}
-      {/*    <div className={"text-xl text-center"}>[ADD CHART]</div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
 
       <motion.div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className='font-medium text-4xl'>Statistics</div>
 
-        <div className='flex justify-around w-50 h-50 border-2'>
-
+        <div className='w-[90%] h-[65%]'>
+          <BarChart
+            xAxis={[{
+              scaleType: 'band',
+              data: ['1', '2', '3', '4', '5', '6'],
+              label: 'Guesses',
+              labelStyle: {fill: 'black', fontSize: 16, fontWeight: 500},
+            }]}
+            series={[{ data: stats.guessArray }]} // Combine all data into a single series
+            margin={{ top: 30, right: 30, bottom: 50, left: 30 }}
+            axisHighlight={{x: 'none', y: 'none'}}
+            colors={['#bc9c22']}
+          />
         </div>
 
 
-        <div className={'flex flex-col w-full gap-2'}>
-          <div className='flex justify-around w-full'>
-            <div className='text-3xl font-extralight'>Strongest Hand: <span className={'font-bold'}>{stats.strongestHand}</span></div>
-          </div>
+        <div className={'flex flex-col w-full gap-2 mb-2'}>
+          {/*<div className='flex justify-around w-full'>*/}
+          {/*  <div className='text-3xl font-extralight'>Strongest Hand: <span className={'font-bold'}>{stats.strongestHand}</span></div>*/}
+          {/*</div>*/}
           <div className='flex justify-around w-full'>
             <div className='flex flex-col justify-center items-center'>
               <div className='text-5xl'>{stats.games}</div>

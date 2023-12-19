@@ -3,21 +3,23 @@ import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { BsSuitSpadeFill, BsSuitClubFill, BsSuitDiamondFill, BsSuitHeartFill } from "react-icons/bs";
 import { motion } from "framer-motion";
+import {CardType} from "@/objects/types";
 
 type CardSelectProps = {
   isOpen: boolean,
   closeModal: () => void,
-  setGuess: (suit: number, value: number) => void
+  setGuess: (suit: number, value: number) => void,
+  selectedCard: CardType
 }
 
-const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess } : CardSelectProps) => {
-  const [selectedSuit, setSelectedSuit] = useState<number>(0);
-  const [selectedValue, setSelectedValue] = useState<number>(0);
+const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, selectedCard } : CardSelectProps) => {
+  const [selectedSuit, setSelectedSuit] = useState<number>(selectedCard.suit);
+  const [selectedValue, setSelectedValue] = useState<number>(selectedCard.value);
   const [warning, setWarning] = useState<boolean>(false);
 
   useEffect(() => {
-    setSelectedSuit(0);
-    setSelectedValue(0);
+    setSelectedSuit(selectedCard.suit);
+    setSelectedValue(selectedCard.value);
     setWarning(false);
   }, [isOpen]);
 

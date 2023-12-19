@@ -42,7 +42,7 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className={"text-4xl font-medium"}>Help</div>
-        <div className={"flex-col w-full h-[90%] overflow-y-scroll mb-2"}>
+        <div className={"flex-col w-[95%] h-[90%] overflow-y-scroll mb-2"}>
           <div className={"text-xl font-semibold text-center"}>Welcome to Hand Hunch!</div>
           <div className={"text-xl"}>Hand Hunch is a poker-inspired game where your goal is to guess the
             mystery Texas Hold'em hand consisting of two cards, based on the available information. Are you ready to
@@ -53,8 +53,8 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
             <div className={"font-semibold inline"}>
               1. Making Guesses:
             </div> Click on one each of the face-down cards to show the popup, and then select the card you believe
-            matches one of the cards in the mystery hand. Each guess is crucial, so choose wisely, based on the given
-            board and hand strength!
+            matches one of the cards in the mystery hand. Make sure you base your guess based on the board and hand
+            strength. (Hint: Each board and the mystery hand is dealt from the same deck of cards.)
           </div>
           <br></br>
           <div className={"text-xl"}>

@@ -23,6 +23,7 @@ export default function Home() {
   const [isWin, setWin] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [isCardSelectOpen, setIsCardSelectOpen] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<CardType>(new CardType());
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isStatsOpen, setIsStatsOpen] = useState(false);
@@ -74,6 +75,7 @@ export default function Home() {
     guess.cards[0].status = index == 0 ? CardStatus.Selected: CardStatus.Unselected;
     guess.cards[1].status = index == 1 ? CardStatus.Selected: CardStatus.Unselected;
     guess.selectedCardIndex = index;
+    setSelectedCard(guess.cards[index]);
     setGame(game);
     setBoards([...game.boards]);
     // setGuesses([...game.guesses]);
@@ -270,12 +272,20 @@ export default function Home() {
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
       <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats}/>
       <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
-      <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess}/>
+      {selectedCard && <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess} selectedCard={selectedCard}/>}
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
                                        iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
       <button onClick={deal} className='absolute bottom-0 right-0'>DEAL</button>
       <button onClick={() => {
         const newStats = new StatsObject();
+        // newStats.guessArray = [1, 3, 5, 2, 6, 1];
+        // newStats.wins = 18;
+        // newStats.losses = 2;
+        // newStats.strongestHand = 'Royal Flush';
+        // newStats.games = 20;
+        // newStats.winPercentage = 0.9;
+        // newStats.longestStreak = 10;
+        // newStats.currentStreak = 5;
         setStats(newStats);
         localStorage.setItem('stats', JSON.stringify(newStats));
       }} className='absolute bottom-0 left-0'>RESET</button>
