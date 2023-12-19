@@ -54,19 +54,15 @@ export default function Home() {
   useEffect(() => {
     const stats = localStorage.getItem('stats');
     if(stats) {
-      console.log('Loading stats');
-      console.log(stats);
       const parsed = JSON.parse(stats);
       const newStats = new StatsObject();
       Object.assign(newStats, parsed);
       setStats(newStats);
-      console.log('Loaded: ', newStats);
     }
   }, []);
 
   // Save stats
   useEffect(() => {
-    console.log('Saved: ', localStorage.getItem('stats'));
     if(isGameOver && !isGameSaved) {
       localStorage.setItem('stats', JSON.stringify(stats));
       setIsGameSaved(true);
@@ -220,6 +216,8 @@ export default function Home() {
       Object.assign(newStats, stats);
       newStats.updateStats(false, curIteration);
       setStats(newStats);
+      localStorage.setItem('stats', JSON.stringify(newStats));
+      setIsGameSaved(true);
     }
     const newGame = new Game();
     setGame(newGame);
@@ -231,7 +229,6 @@ export default function Home() {
     setIsGameOver(false);
     setIsCardSelectOpen(false);
     setIsGameOverOpen(false);
-    setIsGameSaved(false);
   }
 
   return (
@@ -277,6 +274,11 @@ export default function Home() {
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
                                        iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
       <button onClick={deal} className='absolute bottom-0 right-0'>DEAL</button>
+      <button onClick={() => {
+        const newStats = new StatsObject();
+        setStats(newStats);
+        localStorage.setItem('stats', JSON.stringify(newStats));
+      }} className='absolute bottom-0 left-0'>RESET</button>
     </div>
   )
 }

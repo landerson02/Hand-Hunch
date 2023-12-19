@@ -42,7 +42,7 @@ const ResetGame: React.FC<ResetProps> = ({ isOpen, closeModal, resetGame } : Res
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className={"text-2xl font-semibold"}>New Game</div>
+        <div className={"text-4xl font-medium"}>New Game</div>
         <div className={"flex flex-col text-center"}>
           <div className={"text-xl"}>Are you sure you want to reset the game?</div>
           <div className={"text-xl"}>This will count as a loss on your stats.</div>

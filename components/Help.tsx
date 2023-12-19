@@ -41,7 +41,7 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className={"text-2xl font-semibold"}>Help</div>
+        <div className={"text-4xl font-medium"}>Help</div>
         <div className={"flex-col w-full h-[90%] overflow-y-scroll mb-2"}>
           <div className={"text-xl font-semibold text-center"}>Welcome to Hand Hunch!</div>
           <div className={"text-xl"}>Hand Hunch is a poker-inspired game where your goal is to guess the

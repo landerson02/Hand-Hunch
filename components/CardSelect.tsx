@@ -68,7 +68,7 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess } 
       <motion.div
         className={"flex flex-col items-center justify-between p-2 h-full"}
       >
-        <div className={"text-2xl font-semibold"}>Guess Card</div>
+        <div className={"text-4xl font-medium"}>Guess Card</div>
         <div className={"flex flex-col items-center w-full p-6"}>
           <div className={"flex justify-around w-full"}>
             <div className={"grid grid-cols-2 gap-2"}>

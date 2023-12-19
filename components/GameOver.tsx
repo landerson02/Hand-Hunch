@@ -63,7 +63,7 @@ const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iter
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className={"text-2xl font-semibold"}>Game Over</div>
+        <div className={"text-4xl font-medium"}>Game Over</div>
         <div className={"text-xl font-semibold"}>{message}</div>
         <div className='flex justify-center gap-7 items-center' >
           <div className={statusColor}>

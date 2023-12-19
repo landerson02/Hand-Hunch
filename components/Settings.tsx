@@ -57,7 +57,7 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, closeModal, applySettings, 
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className={"text-2xl font-semibold"}>Settings</div>
+        <div className={"text-4xl font-medium"}>Settings</div>
         <div className={"flex flex-col w-full items-center"}>
           <div className={"text-xl text-center font-semibold pb-1"}>Background Color</div>
           <div className={"flex flex-row justify-around w-[70%]"}>
