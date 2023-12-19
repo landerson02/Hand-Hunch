@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Game } from "@/objects/game";
-import { BoardType, CardType, CardStatus} from "@/objects/types";
+import { BoardType, CardType, CardStatus, GuessType } from "@/objects/types";
 import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
@@ -17,7 +17,7 @@ import { StatsObject } from "@/objects/stats";
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
   const [boards, setBoards] = useState<BoardType[]>([]);
-  // const [guesses, setGuesses] = useState<GuessType[]>([]);
+  const [guesses, setGuesses] = useState<GuessType[]>([]);
   const [hand, setHand] = useState<CardType[]>([]);
   const [curIteration, setCurIteration] = useState<number>(0);
   const [isWin, setWin] = useState(false);
@@ -32,14 +32,15 @@ export default function Home() {
   const [settings, setSettings]
     = useState<SettingsObject>(new SettingsObject("bg-green-700", false));
   const [isResetOpen, setIsResetOpen] = useState(false);
-  const [isGameSaved, setIsGameSaved] = useState(false);
+  const [isStatsSaved, setIsStatsSaved] = useState(false);
+  const [isGameSaved, setIsGameSaved] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setGame(game);
     setBoards(game.boards);
-    // setGuesses(game.guesses);
+    setGuesses(game.guesses);
     setHand(game.hand.cards);
   }, []);
 
@@ -64,11 +65,32 @@ export default function Home() {
 
   // Save stats
   useEffect(() => {
-    if(isGameOver && !isGameSaved) {
+    if(isGameOver && !isStatsSaved) {
       localStorage.setItem('stats', JSON.stringify(stats));
-      setIsGameSaved(true);
+      setIsStatsSaved(true);
     }
   }, [isGameOver, stats]);
+
+  // Load current game
+  useEffect(() => {
+    const game = localStorage.getItem('game');
+    if(game) {
+      const parsed: Game = Game.fromJSON(JSON.parse(game));
+      setGame(parsed);
+      setBoards(parsed.boards);
+      setGuesses(parsed.guesses);
+      setHand(parsed.hand.cards);
+      setCurIteration(parsed.boards.length - 1);
+    }
+  }, []);
+
+  // Save current game
+  useEffect(() => {
+    if(!isGameSaved) {
+      localStorage.setItem('game', JSON.stringify(game.toJSON()));
+      setIsGameSaved(true);
+    }
+  }, [game, isGameSaved]);
 
   const onCardSelect = (index: number) => {
     let guess = game.guesses[curIteration];
@@ -78,7 +100,7 @@ export default function Home() {
     setSelectedCard(guess.cards[index]);
     setGame(game);
     setBoards([...game.boards]);
-    // setGuesses([...game.guesses]);
+    setGuesses([...game.guesses]);
     setIsCardSelectOpen(true);
   }
 
@@ -89,7 +111,7 @@ export default function Home() {
     guess.cards[guess.selectedCardIndex].status = CardStatus.Unselected;
     setGame(game);
     setBoards([...game.boards]);
-    // setGuesses([...game.guesses]);
+    setGuesses([...game.guesses]);
   }
 
   const onSubmitGuess = () => {
@@ -100,8 +122,9 @@ export default function Home() {
     guess.validateGuess(game.hand);
     setGame(game);
     setBoards([...game.boards]);
-    // setGuesses([...game.guesses]);
+    setGuesses([...game.guesses]);
     deal();
+    setIsGameSaved(false);
   }
 
   const closeCardSelect = () => {
@@ -112,7 +135,7 @@ export default function Home() {
     guess.selectedCardIndex = -1;
     setGame(game);
     setBoards([...game.boards]);
-    // setGuesses([...game.guesses]);
+    setGuesses([...game.guesses]);
   }
 
   const closeGameOver = () => {
@@ -205,7 +228,7 @@ export default function Home() {
     }
     setGame(game);
     setBoards([...game.boards]);
-    // setGuesses([...game.guesses]);
+    setGuesses([...game.guesses]);
     setCurIteration(curIteration+1);
     // if (scrollRef.current) {
     //   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
@@ -219,12 +242,12 @@ export default function Home() {
       newStats.updateStats(false, curIteration);
       setStats(newStats);
       localStorage.setItem('stats', JSON.stringify(newStats));
-      setIsGameSaved(true);
+      setIsStatsSaved(true);
     }
     const newGame = new Game();
     setGame(newGame);
     setBoards([...newGame.boards]);
-    // setGuesses([...newGame.guesses]);
+    setGuesses([...newGame.guesses]);
     setHand([...newGame.hand.cards]);
     setCurIteration(0);
     setWin(false);

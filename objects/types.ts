@@ -15,6 +15,23 @@ export class CardType {
   suit: number;
   value: number;
   status: CardStatus;
+
+  toJSON() {
+    return {
+      suit: this.suit,
+      value: this.value,
+      status: this.status
+    };
+  }
+
+  static fromJSON(json: any) {
+    let card = new CardType();
+    card.suit = json.suit;
+    card.value = json.value;
+    card.status = json.status;
+
+    return card;
+  }
 }
 
 export class BoardType {
@@ -25,6 +42,16 @@ export class BoardType {
     this.cards = [...cards];
   }
   cards: CardType[] = [];
+
+  toJSON() {
+    return {
+      cards: this.cards.map(card => card.toJSON())
+    };
+  }
+
+  static fromJSON(json: any) {
+    return new BoardType(json.cards.map(CardType.fromJSON));
+  }
 }
 
 export class GuessType {
@@ -59,6 +86,23 @@ export class GuessType {
       card.status = CardStatus.Red;
     }
   }
+
+  toJSON() {
+    return {
+      cards: this.cards.map(card => card.toJSON()),
+      selectedCardIndex: this.selectedCardIndex,
+      current: this.current
+    };
+  }
+
+  static fromJSON(json: any) {
+    let guess = new GuessType();
+    guess.cards = json.cards.map(CardType.fromJSON);
+    guess.selectedCardIndex = json.selectedCardIndex;
+    guess.current = json.current;
+
+    return guess;
+  }
 }
 
 export class HandType {
@@ -69,4 +113,14 @@ export class HandType {
     this.cards = [...cards];
   }
   cards: CardType[] = [];
+
+  toJSON() {
+    return {
+      cards: this.cards.map(card => card.toJSON())
+    };
+  }
+
+  static fromJSON(json: any) {
+    return new HandType(json.cards.map(CardType.fromJSON));
+  }
 }

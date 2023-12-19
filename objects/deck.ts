@@ -37,4 +37,19 @@ export class Deck {
     // @ts-ignore
     return cards;
   }
+
+  toJSON() {
+    return {
+      cards: this.cards.map(card => card.toJSON()),
+      length: this.length
+    };
+  }
+
+  static fromJSON(json: any) {
+    let deck = new Deck();
+    deck.cards = json.cards.map(CardType.fromJSON);
+    deck.length = json.length;
+
+    return deck;
+  }
 }
