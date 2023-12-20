@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 
 type BoardProps = {
   board: BoardType
+  boardCount: number
 }
 
-const Board = ({board}: BoardProps) => {
+const Board = ({board, boardCount}: BoardProps) => {
   const [flippedCards, setFlippedCards] = useState<number>(0);
 
   useEffect(() => {
@@ -23,7 +24,7 @@ const Board = ({board}: BoardProps) => {
       }
     }, 250);
     return () => clearInterval(flipInterval);
-  }, []);
+  }, [board]);
 
   return (
     <div className='w-full'>
@@ -37,7 +38,7 @@ const Board = ({board}: BoardProps) => {
             );
           })
         ) : (
-          board.cards.map((card,index) => {
+          board.cards.map((card, index) => {
             return (
               <motion.div
                 key = {index}

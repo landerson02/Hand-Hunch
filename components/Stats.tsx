@@ -116,7 +116,7 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 1.0 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl'>{(stats.averageGuesses)}</div>
+              <div className='text-5xl'>{(stats.averageGuesses).toFixed(2)}</div>
               <div className='text-xl'>Avg Guesses</div>
             </motion.div>
           </div>
