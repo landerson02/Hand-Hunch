@@ -285,16 +285,16 @@ export default function Home() {
       </div>
       <Nav openHelp={openHelp} openStats={openStats} openSettings={openSettings}/>
       <div className={"flex justify-center align-top h-[75%]"}>
-        <div className={"w-[80%] h-full"}>
+        <div className={"md:w-[80%] w-[98%] h-full"}>
           <div className={"flex justify-between p-1"}>
             <button
-                className='z-1 font-extrabold text-2xl bg-green-500 border-2 w-[20%] mt-2 py-2 border-black rounded-md
+                className='z-1 font-extrabold text-xl md:text-2xl bg-green-500 border-2 md:w-[20%] w-[40%] mt-2 py-2 border-black rounded-md
                   hover:scale-105 transition duration-200 ease-in-out'
                 onClick={() => {
                   onSubmitGuess();
                 }}>Submit Guess</button>
             <button
-                className='z-1 font-extrabold text-2xl bg-red-500 border-2 border-black mt-2 rounded-md w-[20%] py-2
+                className='z-1 font-extrabold text-xl md:text-2xl bg-red-500 border-2 border-black mt-2 rounded-md md:w-[20%] w-[40%] py-2
                   hover:scale-105 transition duration-200 ease-in-out'
                 onClick={() => {
                   if (!isGameOver) {

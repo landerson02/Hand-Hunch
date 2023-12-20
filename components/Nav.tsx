@@ -13,8 +13,8 @@ type NavProps = {
 const Nav = ({ openHelp, openStats, openSettings } : NavProps) => {
   return (
     <>
-      <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[40px] bg-white border-b border-gray-800'>
-        <div>
+      <nav className='fixed z-40 flex w-full h-[4rem] items-center justify-between py-6 px-[10px] md:px-[40px] bg-white border-b border-gray-800'>
+        <div className={"hidden md:block"}>
           <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
             <a>
               <li className={"text-black hover:-translate-y-1 transition-transform p-[1.5]"}>
@@ -39,7 +39,7 @@ const Nav = ({ openHelp, openStats, openSettings } : NavProps) => {
           </ul>
         </div>
         <div className={"flex justify-center"}>
-          <a className='flex align-middle justify-center w-[15%] h-[90%]' href=''>
+          <a className='flex align-middle justify-center w-48 h-[90%]' href=''>
             <Image src={logo} alt={"Logo"} className={"self-center"}/>
           </a>
         </div>
@@ -49,7 +49,7 @@ const Nav = ({ openHelp, openStats, openSettings } : NavProps) => {
             fontSize: 'clamp(14px, 5vw, 24px)',
           }}
         >
-          <ul className='text-black text-w w-full h-full flex flex-row gap-4 items-center justify-center'>
+          <ul className='text-black text-w w-full h-full flex flex-row gap-1 md:gap-4 items-center justify-center'>
             <a
               className='group hover:cursor-pointer'
               title='Help'
