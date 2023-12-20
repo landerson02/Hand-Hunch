@@ -22,8 +22,8 @@ const Row = ({board, hand, guess, onCardClick, updateHandStrength, rowCount}: ro
       transition={{ duration: .4, delay: 0 }}
       className='flex md:flex-row flex-col items-center justify-between w-[100%] md:p-1'
     >
-      <div className={"flex flex-row items-center md:justify-between justify-center"}>
-        <div className={"md:w-[20%] w-[50%]"}>
+      <div className={"flex flex-row items-center md:justify-between justify-center w-full"}>
+        <div className={"md:w-[20%] w-[40%]"}>
           {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
         </div>
         <div className={"hidden w-[60%] md:flex md:flex-row"}>
@@ -33,7 +33,7 @@ const Row = ({board, hand, guess, onCardClick, updateHandStrength, rowCount}: ro
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .3, delay: 1.4 }}
-          className='flex self-right text-center font-semibold text-xl w-[50%] md:w-[20%] items-center justify-center'
+          className='flex text-center font-semibold text-xl w-[40%] md:w-[20%] items-center justify-center'
         >
           <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-5 w-fit"}>
             {strength}
@@ -41,7 +41,7 @@ const Row = ({board, hand, guess, onCardClick, updateHandStrength, rowCount}: ro
         </motion.div>
       </div>
       <div className={"md:hidden flex flex-row items-center justify-center w-[100%] "}>
-        <div className={"md:w-[60%] w-[70%] flex md:flex-row flex-col"}>
+        <div className={"w-[100%] flex md:flex-row flex-col"}>
           {board && board.cards ? <Board board={board} boardCount={rowCount}/> : null}
         </div>
       </div>

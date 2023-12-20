@@ -47,6 +47,21 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
       backgroundColor: 'transparent', // make the background transparent
     },
   };
+  const smCustomStyles = {
+    content: {
+      width: '40%', // adjust this value to change the width of the modal
+      height: '40%', // adjust this value to change the height of the modal
+      maxHeight: '20rem', // overrides the height to make the modal scrollable
+      minWidth: '35rem', // overrides the width to make the modal scrollable
+      margin: 'auto', // centers the modal in the middle of the screen
+      padding: 0,
+      backgroundColor: 'white', // make the modal solid white
+      outline: 'solid 1px black',
+    },
+    overlay: {
+      backgroundColor: 'transparent', // make the background transparent
+    },
+  };
   const unselected = 'border-2 rounded-md border-black border-opacity-0'
   const selected = 'border-2 rounded-md border-black bg-green-300 border-opacity-40'
   // const hover = 'hover:bg-green-200 hover:border-opacity-40'

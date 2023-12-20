@@ -320,7 +320,7 @@ export default function Home() {
                   }
                 }}>Reset Game</button>
           </div>
-          <div className='overflow-y-auto h-full mt-3 z-1 no-scrollbar' ref={scrollRef}>
+          <div className='overflow-y-auto h-full md:mt-3 z-1 no-scrollbar' ref={scrollRef}>
             {boards.map((board, index) => {
               return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]}
                           onCardClick={onCardSelect} updateHandStrength={updateHandStrength} rowCount={boards.length}/>
