@@ -28,19 +28,44 @@ const Board = ({board}: BoardProps) => {
   return (
     <div className='w-full'>
       <div className='flex justify-center md:gap-7 items-center md:scale-100 scale-[60%]'>
-        {board.cards.map((card,index) => {
-          return (
-            <motion.div
-              key = {index}
-              initial={{rotateY: 180}}
-              animate={{rotateY: 0}}
-              transition={{delay: index*0.25 + .205}}
-            >
-              {/* change in b is 1/10th change in m */}
-              <Card card={card} isFlipped={index < flippedCards}/>
-            </motion.div>
-          );
-        })}
+        {board.index < boardCount-1 ? (
+          board.cards.map((card, index) => {
+            return (
+              <div key={index}>
+                <Card card={card} isFlipped={true}/>
+              </div>
+            );
+          })
+        ) : (
+          board.cards.map((card,index) => {
+            return (
+              <motion.div
+                key = {index}
+                initial={{rotateY: 180}}
+                animate={{rotateY: 0}}
+                transition={{delay: index*0.25 + .205}}
+              >
+                {/* change in b is 1/10th change in m */}
+                <Card card={card} isFlipped={index < flippedCards}/>
+              </motion.div>
+            );
+          })
+        )}
+
+
+        {/*{board.cards.map((card,index) => {*/}
+        {/*  return (*/}
+        {/*    <motion.div*/}
+        {/*      key = {index}*/}
+        {/*      initial={{rotateY: 180}}*/}
+        {/*      animate={{rotateY: 0}}*/}
+        {/*      transition={{delay: index*0.25 + .205}}*/}
+        {/*    >*/}
+        {/*       change in b is 1/10th change in m*/}
+              {/*<Card card={card} isFlipped={index < flippedCards}/>*/}
+            {/*</motion.div>*/}
+          {/*);*/}
+        {/*})}*/}
       </div>
     </div>
   );

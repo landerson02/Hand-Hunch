@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Game } from "@/objects/game";
-import { BoardType, CardType, CardStatus, GuessType } from "@/objects/types";
+import { BoardType, CardType, CardStatus } from "@/objects/types";
 import Nav from "@/components/Nav";
 import Row from "@/components/Row";
 import CardSelect from '@/components/CardSelect';
@@ -17,7 +17,7 @@ import { StatsObject } from "@/objects/stats";
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
   const [boards, setBoards] = useState<BoardType[]>([]);
-  const [guesses, setGuesses] = useState<GuessType[]>([]);
+  // const [guesses, setGuesses] = useState<GuessType[]>([]);
   const [hand, setHand] = useState<CardType[]>([]);
   const [curIteration, setCurIteration] = useState<number>(0);
   const [isWin, setWin] = useState(false);
@@ -41,7 +41,7 @@ export default function Home() {
   useEffect(() => {
     setGame(game);
     setBoards(game.boards);
-    setGuesses(game.guesses);
+    // setGuesses(game.guesses);
     setHand(game.hand.cards);
   }, []);
 
@@ -98,9 +98,21 @@ export default function Home() {
       const parsed: Game = Game.fromJSON(JSON.parse(game));
       setGame(parsed);
       setBoards(parsed.boards);
-      setGuesses(parsed.guesses);
+      // setGuesses(parsed.guesses);
       setHand(parsed.hand.cards);
-      setCurIteration(parsed.boards.length - 1);
+      const isWinJSON = localStorage.getItem('isWin');
+      if(isWinJSON) {
+        setWin(JSON.parse(isWinJSON));
+      }
+      const isGameOverJSON = localStorage.getItem('isGameOver');
+      if(isGameOverJSON) {
+        setIsGameOver(JSON.parse(isGameOverJSON));
+      }
+      const curIterationJSON = localStorage.getItem('curIteration');
+      if(curIterationJSON) {
+        setCurIteration(JSON.parse(curIterationJSON));
+      }
+
     }
   }, []);
 
@@ -108,6 +120,9 @@ export default function Home() {
   useEffect(() => {
     if(!isGameSaved) {
       localStorage.setItem('game', JSON.stringify(game.toJSON()));
+      localStorage.setItem('isWin', JSON.stringify(isWin));
+      localStorage.setItem('isGameOver', JSON.stringify(isGameOver));
+      localStorage.setItem('curIteration', JSON.stringify(curIteration));
       setIsGameSaved(true);
     }
   }, [game, isGameSaved]);
@@ -120,7 +135,7 @@ export default function Home() {
     setSelectedCard(guess.cards[index]);
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     setIsCardSelectOpen(true);
   }
 
@@ -131,7 +146,7 @@ export default function Home() {
     guess.cards[guess.selectedCardIndex].status = CardStatus.Unselected;
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
   }
 
   const onSubmitGuess = () => {
@@ -142,7 +157,7 @@ export default function Home() {
     guess.validateGuess(game.hand);
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     deal();
     setIsGameSaved(false);
   }
@@ -155,7 +170,7 @@ export default function Home() {
     guess.selectedCardIndex = -1;
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
   }
 
   const closeGameOver = () => {
@@ -250,7 +265,7 @@ export default function Home() {
     }
     setGame(game);
     setBoards([...game.boards]);
-    setGuesses([...game.guesses]);
+    // setGuesses([...game.guesses]);
     setCurIteration(curIteration+1);
     // if (scrollRef.current) {
     //   scrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' });
@@ -269,13 +284,14 @@ export default function Home() {
     const newGame = new Game();
     setGame(newGame);
     setBoards([...newGame.boards]);
-    setGuesses([...newGame.guesses]);
+    // setGuesses([...newGame.guesses]);
     setHand([...newGame.hand.cards]);
     setCurIteration(0);
     setWin(false);
     setIsGameOver(false);
     setIsCardSelectOpen(false);
     setIsGameOverOpen(false);
+    setIsGameSaved(false);
   }
 
   return (
@@ -307,7 +323,7 @@ export default function Home() {
           <div className='overflow-y-auto h-full mt-3 z-1 no-scrollbar' ref={scrollRef}>
             {boards.map((board, index) => {
               return <Row key={index} board={board} hand={game.hand} guess={game.guesses[index]}
-                          onCardClick={onCardSelect} updateHandStrength={updateHandStrength}/>
+                          onCardClick={onCardSelect} updateHandStrength={updateHandStrength} rowCount={boards.length}/>
             })}
           </div>
         </div>

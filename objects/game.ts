@@ -14,7 +14,8 @@ export class Game {
   hand: HandType;
   guesses: GuessType[];
   deal() {
-    this.boards.push(new BoardType(this.deck.deal(5) as CardType[]));
+    const index = this.boards.length;
+    this.boards.push(new BoardType(this.deck.deal(5) as CardType[], index));
     this.guesses.push(new GuessType());
   }
 
