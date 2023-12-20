@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 
 type BoardProps = {
   board: BoardType
+  boardCount: number
 }
 
-const Board = ({board}: BoardProps) => {
+const Board = ({board, boardCount}: BoardProps) => {
   const [flippedCards, setFlippedCards] = useState<number>(0);
 
   useEffect(() => {
@@ -28,19 +29,44 @@ const Board = ({board}: BoardProps) => {
   return (
     <div className='w-[50rem]'>
       <div className='flex justify-center md:gap-7 items-center'>
-        {board.cards.map((card,index) => {
-          return (
-            <motion.div
-              key = {index}
-              initial={{rotateY: 180}}
-              animate={{rotateY: 0}}
-              transition={{delay: index*0.25 + .205}}
-            >
-              {/* change in b is 1/10th change in m */}
-              <Card card={card} isFlipped={index < flippedCards}/>
-            </motion.div>
-          );
-        })}
+        {board.index < boardCount-1 ? (
+          board.cards.map((card, index) => {
+            return (
+              <div key={index}>
+                <Card card={card} isFlipped={true}/>
+              </div>
+            );
+          })
+        ) : (
+          board.cards.map((card,index) => {
+            return (
+              <motion.div
+                key = {index}
+                initial={{rotateY: 180}}
+                animate={{rotateY: 0}}
+                transition={{delay: index*0.25 + .205}}
+              >
+                {/* change in b is 1/10th change in m */}
+                <Card card={card} isFlipped={index < flippedCards}/>
+              </motion.div>
+            );
+          })
+        )}
+
+
+        {/*{board.cards.map((card,index) => {*/}
+        {/*  return (*/}
+        {/*    <motion.div*/}
+        {/*      key = {index}*/}
+        {/*      initial={{rotateY: 180}}*/}
+        {/*      animate={{rotateY: 0}}*/}
+        {/*      transition={{delay: index*0.25 + .205}}*/}
+        {/*    >*/}
+        {/*       change in b is 1/10th change in m*/}
+              {/*<Card card={card} isFlipped={index < flippedCards}/>*/}
+            {/*</motion.div>*/}
+          {/*);*/}
+        {/*})}*/}
       </div>
     </div>
   );

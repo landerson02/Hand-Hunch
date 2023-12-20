@@ -10,8 +10,9 @@ type rowProps = {
   guess: GuessType
   onCardClick: (index: number) => void;
   updateHandStrength: (handStrength: string) => void;
+  rowCount: number;
 }
-const Row = ({board, hand, guess, onCardClick, updateHandStrength}: rowProps) => {
+const Row = ({board, hand, guess, onCardClick, updateHandStrength, rowCount}: rowProps) => {
   let strength = evaluate(board, hand);
   updateHandStrength(strength);
   return (
@@ -24,7 +25,7 @@ const Row = ({board, hand, guess, onCardClick, updateHandStrength}: rowProps) =>
       <div className={"w-[20%]"}>
         {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
       </div>
-      {board && board.cards ? <Board board={board}/> : null}
+      {board && board.cards ? <Board board={board} boardCount={rowCount}/> : null}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

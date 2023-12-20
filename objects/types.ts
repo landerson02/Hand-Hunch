@@ -35,22 +35,25 @@ export class CardType {
 }
 
 export class BoardType {
-  constructor(cards: CardType[]) {
+  constructor(cards: CardType[], index: number) {
+    this.index = index;
     if (cards.length !== 5) {
       throw new Error('Board must contain exactly 5 cards');
     }
     this.cards = [...cards];
   }
   cards: CardType[] = [];
+  index: number;
 
   toJSON() {
     return {
-      cards: this.cards.map(card => card.toJSON())
+      cards: this.cards.map(card => card.toJSON()),
+      index: this.index
     };
   }
 
   static fromJSON(json: any) {
-    return new BoardType(json.cards.map(CardType.fromJSON));
+    return new BoardType(json.cards.map(CardType.fromJSON), json.index);
   }
 }
 
