@@ -23,7 +23,7 @@ const Guess = ({guess, onCardClick}: GuessProps) => {
   return (
     <div className='w-full flex align-middle justify-left'>
       {/*<div className='self-center text-center font-extrabold text-2xl w-[15rem]'>Guess</div>*/}
-      <div className='flex w-full justify-center md:gap-7 items-center md:scale-100 scale-[60%]' >
+      <div className='flex w-full justify-center md:gap-7 items-center md:scale-100 scale-[80%]' >
         <div onClick={() => {
           if (guess.current) onCardClick(0);
         }} className={`${guess.current ? "hover:cursor-pointer" : ""} ${statusColor[guess.cards[0].status]}`}>

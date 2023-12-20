@@ -20,43 +20,32 @@ const Row = ({board, hand, guess, onCardClick, updateHandStrength, rowCount}: ro
       initial={{ opacity: 0, y: 20, z: 1}}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: .4, delay: 0 }}
-      className='flex md:flex-row flex-col items-center justify-between w-[100%] p-1'
+      className='flex md:flex-row flex-col items-center justify-between w-[100%] md:p-1'
     >
-      <div className={"flex flex-row items-center justify-between w-[100%] "}>
-        <div className={"md:w-[20%] w-[30%]"}>
+      <div className={"flex flex-row items-center md:justify-between justify-center"}>
+        <div className={"md:w-[20%] w-[50%]"}>
           {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
         </div>
-        <div className={"md:w-[60%] w-[70%] flex md:flex-row flex-col"}>
+        <div className={"hidden w-[60%] md:flex md:flex-row"}>
           {board && board.cards ? <Board board={board} boardCount={rowCount}/> : null}
         </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: .3, delay: 1.4 }}
-          className='hidden md:flex self-right text-center font-semibold text-xl w-[20%] items-center justify-center'
+          className='flex self-right text-center font-semibold text-xl w-[50%] md:w-[20%] items-center justify-center'
         >
           <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-5 w-fit"}>
             {strength}
           </div>
         </motion.div>
       </div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: .3, delay: 1.4 }}
-        className='md:hidden flex self-right text-center font-semibold text-xs md:text-xl w-[20%] items-center justify-center'
-      >
-        <div className={"bg-gray-200 border-2 py-2 border-black rounded-md p-5 w-fit"}>
-          {strength}
+      <div className={"md:hidden flex flex-row items-center justify-center w-[100%] "}>
+        <div className={"md:w-[60%] w-[70%] flex md:flex-row flex-col"}>
+          {board && board.cards ? <Board board={board} boardCount={rowCount}/> : null}
         </div>
-      </motion.div>
+      </div>
     </motion.div>
-  //
-  // <div className='flex justify-evenly w-[100%] p-4' >
-  //   {guess && guess.cards ? <Guess guess={guess} onCardClick={onCardClick} /> : null}
-  //   {board && board.cards ? <Board board={board}/> : null}
-  //   <div className='self-center text-center font-extrabold text-2xl w-[15rem]'>{strength}</div>
-  // </div>
   );
 };
 

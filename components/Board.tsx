@@ -28,7 +28,7 @@ const Board = ({board, boardCount}: BoardProps) => {
 
   return (
     <div className='w-full'>
-      <div className='flex justify-center md:gap-7 items-center md:scale-100 scale-[60%]'>
+      <div className='flex justify-center md:gap-7 items-center md:scale-100 scale-[80%]'>
         {board.index < boardCount-1 ? (
           board.cards.map((card, index) => {
             return (
