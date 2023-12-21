@@ -34,25 +34,10 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
 
   const customStyles = {
     content: {
-      width: '40%', // adjust this value to change the width of the modal
-      height: '40%', // adjust this value to change the height of the modal
+      width: '80%', // adjust this value to change the width of the modal
+      height: '45%', // adjust this value to change the height of the modal
       maxHeight: '20rem', // overrides the height to make the modal scrollable
-      minWidth: '35rem', // overrides the width to make the modal scrollable
-      margin: 'auto', // centers the modal in the middle of the screen
-      padding: 0,
-      backgroundColor: 'white', // make the modal solid white
-      outline: 'solid 1px black',
-    },
-    overlay: {
-      backgroundColor: 'transparent', // make the background transparent
-    },
-  };
-  const smCustomStyles = {
-    content: {
-      width: '40%', // adjust this value to change the width of the modal
-      height: '40%', // adjust this value to change the height of the modal
-      maxHeight: '20rem', // overrides the height to make the modal scrollable
-      minWidth: '35rem', // overrides the width to make the modal scrollable
+      maxWidth: '35rem', // overrides the width to make the modal scrollable
       margin: 'auto', // centers the modal in the middle of the screen
       padding: 0,
       backgroundColor: 'white', // make the modal solid white
@@ -85,10 +70,10 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
       <motion.div
         className={"flex flex-col items-center justify-between p-2 h-full"}
       >
-        <div className={"text-4xl font-medium"}>Guess Card</div>
-        <div className={"flex flex-col items-center w-full p-6"}>
-          <div className={"flex justify-around w-full"}>
-            <div className={"grid grid-cols-2 gap-2"}>
+        <div className={"md:text-4xl text-3xl font-medium"}>Guess Card</div>
+        <div className={"flex flex-col items-center w-full md:p-6 p-2"}>
+          <div className={"flex md:flex-row flex-col md:justify-around justify-center w-full gap-3"}>
+            <div className={"grid md:grid-cols-2 grid-cols-4 w-[65%] md:w-fit gap-2 self-center"}>
               <button onClick={() => setSelectedSuit(1)} className={`${selectedSuit == 1 ? selected : unselected} ${hover}`}>
                 <BsSuitSpadeFill className={"w-9 h-9"}/>
               </button>
@@ -103,43 +88,43 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
               </button>
             </div>
             <div className={"grid grid-cols-7 gap-2 text-4xl font-thin"}>
-              <button onClick={() => setSelectedValue(1)} className={`${selectedValue == 1 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(1)} className={`${selectedValue == 1 ? selected : unselected} ${hover}`}>
                 A
               </button>
-              <button onClick={() => setSelectedValue(2)} className={`${selectedValue == 2 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(2)} className={`${selectedValue == 2 ? selected : unselected} ${hover}`}>
                 2
               </button>
-              <button onClick={() => setSelectedValue(3)} className={`${selectedValue == 3 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(3)} className={`${selectedValue == 3 ? selected : unselected} ${hover}`}>
                 3
               </button>
-              <button onClick={() => setSelectedValue(4)} className={`${selectedValue == 4 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(4)} className={`${selectedValue == 4 ? selected : unselected} ${hover}`}>
                 4
               </button>
-              <button onClick={() => setSelectedValue(5)} className={`${selectedValue == 5 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(5)} className={`${selectedValue == 5 ? selected : unselected} ${hover}`}>
                 5
               </button>
-              <button onClick={() => setSelectedValue(6)} className={`${selectedValue == 6 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(6)} className={`${selectedValue == 6 ? selected : unselected} ${hover}`}>
                 6
               </button>
-              <button onClick={() => setSelectedValue(7)} className={`${selectedValue == 7 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(7)} className={`${selectedValue == 7 ? selected : unselected} ${hover}`}>
                 7
               </button>
-              <button onClick={() => setSelectedValue(8)} className={`${selectedValue == 8 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(8)} className={`${selectedValue == 8 ? selected : unselected} ${hover}`}>
                 8
               </button>
-              <button onClick={() => setSelectedValue(9)} className={`${selectedValue == 9 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(9)} className={`${selectedValue == 9 ? selected : unselected} ${hover}`}>
                 9
               </button>
-              <button onClick={() => setSelectedValue(10)} className={`${selectedValue == 10 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(10)} className={`${selectedValue == 10 ? selected : unselected} ${hover}`}>
                 10
               </button>
-              <button onClick={() => setSelectedValue(11)} className={`${selectedValue == 11 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(11)} className={`${selectedValue == 11 ? selected : unselected} ${hover}`}>
                 J
               </button>
-              <button onClick={() => setSelectedValue(12)} className={`${selectedValue == 12 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(12)} className={`${selectedValue == 12 ? selected : unselected} ${hover}`}>
                 Q
               </button>
-              <button onClick={() => setSelectedValue(13)} className={`${selectedValue == 13 ? selected : unselected} ${moveUp}`}>
+              <button onClick={() => setSelectedValue(13)} className={`${selectedValue == 13 ? selected : unselected} ${hover}`}>
                 K
               </button>
             </div>
@@ -148,7 +133,7 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
         </div>
         <button
           onClick={onSelect}
-          className={"text-2xl text-black font-bold hover:bg-green-600 " +
+          className={"md:text-2xl text-xl text-black font-bold hover:bg-green-600 " +
             "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
         >
           Select

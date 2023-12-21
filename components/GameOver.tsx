@@ -33,10 +33,10 @@ const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iter
 
   const customStyles = {
     content: {
-      width: '40%', // adjust this value to change the width of the modal
+      width: '80%', // adjust this value to change the width of the modal
       height: '45%', // adjust this value to change the height of the modal
+      maxWidth: '35rem',
       maxHeight: '20rem', // overrides the height to make the modal scrollable
-      minWidth: '35rem', // overrides the width to make the modal scrollable
       margin: 'auto', // centers the modal in the middle of the screen
       padding: 0,
       backgroundColor: 'white', // make the modal solid white
@@ -63,8 +63,8 @@ const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iter
         <IoIosClose className={"text-red-600 w-12 h-12"}/>
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className={"text-4xl font-medium"}>Game Over</div>
-        <div className={"text-xl font-semibold"}>{message}</div>
+        <div className={"md:text-4xl text-3xl font-medium"}>Game Over</div>
+        <div className={"md:text-xl font-semibold"}>{message}</div>
         <div className='flex justify-center gap-7 items-center' >
           <div className={statusColor}>
             <Card card={hand[0]} isFlipped={true}/>
@@ -76,14 +76,14 @@ const GameOver: React.FC<GameOverProps> = ({ isOpen, closeModal, hand, win, iter
         <div className={"flex justify-evenly w-full p-2"}>
           <button
             onClick={resetGame}
-            className={"text-2xl text-black font-bold hover:bg-green-600 " +
+            className={"md:text-2xl text-xl text-black font-bold hover:bg-green-600 " +
               "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
           >
             Play Again
           </button>
           <button
             onClick={openStats}
-            className={"text-2xl text-black font-bold hover:bg-green-600 " +
+            className={"md:text-2xl text-xl text-black font-bold hover:bg-green-600 " +
               "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
           >
             See Stats

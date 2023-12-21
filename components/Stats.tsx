@@ -15,10 +15,10 @@ type StatsProps = {
 const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps) => {
   const customStyles = {
     content: {
-      width: '40%', // adjust this value to change the width of the modal
-      height: '60%', // adjust this value to change the height of the modal
-      maxHeight: '40rem', // overrides the height to make the modal scrollable
-      minWidth: '35rem', // overrides the width to make the modal scrollable
+      width: '80%', // adjust this value to change the width of the modal
+      height: '50%', // adjust this value to change the height of the modal
+      maxHeight: '22rem', // overrides the height to make the modal scrollable
+      maxWidth: '35rem', // overrides the width to make the modal scrollable
       margin: 'auto', // centers the modal in the middle of the screen
       padding: 0,
       backgroundColor: 'white', // make the modal solid white
@@ -46,7 +46,7 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
       </motion.button>
 
       <motion.div className={"flex flex-col items-center justify-between p-2 h-full"}>
-        <div className='font-medium text-4xl'>Statistics</div>
+        <div className='font-medium md:text-4xl text-3xl'>Statistics</div>
 
         <div className='w-[90%] h-[65%]'>
           <BarChart
@@ -80,8 +80,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 0.2 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl'>{stats.games}</div>
-              <div className='text-xl'>Games</div>
+              <div className='md:text-5xl text-3xl'>{stats.games}</div>
+              <div className='md:text-xl text-xs'>Games</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -89,8 +89,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 0.4 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl'>{(stats.winPercentage * 100).toFixed(0)}%</div>
-              <div className='text-xl'>Win Rate</div>
+              <div className='md:text-5xl text-3xl'>{(stats.winPercentage * 100).toFixed(0)}%</div>
+              <div className='md:text-xl text-xs'>Win Rate</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -98,8 +98,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 0.6 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl flex justify-center items-center'>{(stats.currentStreak)}<FaFire className='w-7 h-7 text-red-600'/></div>
-              <div className='text-xl'>Current</div>
+              <div className='md:text-5xl text-3xl flex justify-center items-center'>{(stats.currentStreak)}<FaFire className='md:w-7 md:h-7 h-5 w-5 text-red-600'/></div>
+              <div className='md:text-xl text-xs'>Current</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -107,8 +107,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 0.8 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl flex justify-center items-center'>{(stats.longestStreak)}<FaFire className='w-7 h-7 text-black'/></div>
-              <div className='text-xl'>Longest</div>
+              <div className='md:text-5xl text-3xl flex justify-center items-center'>{(stats.longestStreak)}<FaFire className='md:w-7 md:h-7 h-5 w-5 text-black'/></div>
+              <div className='md:text-xl text-xs'>Longest</div>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -116,8 +116,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
               transition={{ delay: 1.0 }}
               className='flex flex-col justify-center items-center'
             >
-              <div className='text-5xl'>{(stats.averageGuesses).toFixed(2)}</div>
-              <div className='text-xl'>Avg Guesses</div>
+              <div className='md:text-5xl text-3xl'>{(stats.averageGuesses).toFixed(2)}</div>
+              <div className='md:text-xl text-xs'>Avg Guesses</div>
             </motion.div>
           </div>
         </motion.div>
