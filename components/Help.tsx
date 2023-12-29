@@ -52,7 +52,7 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
           <div className={"md:text-xl"}>
             <div className={"font-semibold inline"}>
               1. Making Guesses:
-            </div> Click on one each of the face-down cards to show the popup, and then select the card you believe
+            </div> Click on each of the face-down cards to show the popup, and then select the card you believe
             matches one of the cards in the mystery hand. Make sure you base your guess based on the board and hand
             strength. (Hint: Each board and the mystery hand is dealt from the same deck of cards.)
           </div>
@@ -65,12 +65,12 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
               <li className={"md:text-xl"}>
                 <div className={"font-semibold inline text-green-800"}>
                   Green:
-                </div> When your chosen card matches both the suit and value of one of the
+                </div> When your chosen card matches both the suit <u>and</u> value of one of the
                 actual mystery cards, it turns green.</li>
               <li className={"md:text-xl"}>
                 <div className={"font-semibold inline text-yellow-500"}>
                 Yellow:
-              </div> If your selected card matches either the suit or value of a
+              </div> If your selected card matches either the suit <u>or</u> value of a
                 mystery card, it turns yellow.</li>
               <li className={"md:text-xl"}>
                 <div className={"font-semibold inline text-red-600"}>
