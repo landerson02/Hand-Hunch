@@ -1,18 +1,23 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { FaFire } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
+import {AuthContext} from "@/components/AuthContext";
 
 type StatsProps = {
   isOpen: boolean,
   closeModal: () => void,
   stats: StatsObject
+  openSignIn: () => void,
 }
 
-const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps) => {
+const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } : StatsProps) => {
+  const authContext = useContext(AuthContext);
+  const isUserSignedIn = authContext?.isUserSignedIn;
+
   const customStyles = {
     content: {
       width: '80%', // adjust this value to change the width of the modal
@@ -121,6 +126,12 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats } : StatsProps)
             </motion.div>
           </div>
         </motion.div>
+        {!isUserSignedIn && (
+          <div className={'flex gap-1'}>
+            <button onClick={() => openSignIn} className={'ml-2 text-blue-500 hover:underline'}>Sign in</button>
+            <div>to save your data</div>
+          </div>
+        )}
       </motion.div>
 
     </Modal>
