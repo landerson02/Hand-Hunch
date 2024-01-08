@@ -13,7 +13,7 @@ import Settings from "@/components/Settings";
 import { SettingsObject } from "@/objects/settings";
 import Stats from "@/components/Stats";
 import { StatsObject } from "@/objects/stats";
-import {AuthContext} from "@/components/AuthContext";
+import {AuthContext} from "@/contexts/AuthContext";
 import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 

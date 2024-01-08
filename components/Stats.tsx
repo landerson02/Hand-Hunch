@@ -5,7 +5,7 @@ import { FaFire } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
-import {AuthContext} from "@/components/AuthContext";
+import {AuthContext} from "@/contexts/AuthContext";
 
 type StatsProps = {
   isOpen: boolean,
