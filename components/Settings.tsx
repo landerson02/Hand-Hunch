@@ -133,7 +133,7 @@ const Settings: React.FC<SettingsProps> = ({ isOpen, closeModal, applySettings, 
             <button onClick={() => {
               setLockedIn(false);
             }}
-                    className={`${lockedIn ? selected : unselected} ${hover}`}>
+                    className={`${!lockedIn ? selected : unselected} ${hover}`}>
               <IoLockOpen className={"md:w-9 md:h-9 h-7 w-7"}/>
             </button>
             <button onClick={() => {
