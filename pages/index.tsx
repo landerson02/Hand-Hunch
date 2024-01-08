@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import { Game } from "@/objects/game";
 import { BoardType, CardType, CardStatus } from "@/objects/types";
 import Nav from "@/components/Nav";
@@ -13,6 +13,9 @@ import Settings from "@/components/Settings";
 import { SettingsObject } from "@/objects/settings";
 import Stats from "@/components/Stats";
 import { StatsObject } from "@/objects/stats";
+import {AuthContext} from "@/components/AuthContext";
+import SignIn from "@/components/SignIn";
+import SignUp from "@/components/SignUp";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -35,6 +38,11 @@ export default function Home() {
   const [isStatsSaved, setIsStatsSaved] = useState(false);
   const [isGameSaved, setIsGameSaved] = useState(true);
   const [isSettingsSaved, setIsSettingsSaved] = useState(true);
+  const authContext = useContext(AuthContext);
+  if(!authContext) {
+    throw new Error("AuthContext is null");
+  }
+  const { isUserSignedIn, setIsUserSignedIn, isSignInOpen, setIsSignInOpen, isSignUpOpen, setIsSignUpOpen } = authContext;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -200,6 +208,25 @@ export default function Home() {
   const closeSettings = () => {
     setIsSettingsOpen(false);
   }
+
+  const openSignIn = () => {
+    closeAllModals();
+    setIsSignInOpen(true);
+  }
+
+  const closeSignIn = () => {
+    setIsSignInOpen(false);
+  }
+
+  const openSignUp = () => {
+    closeAllModals();
+    setIsSignUpOpen(true);
+  }
+
+  const closeSignUp = () => {
+    setIsSignUpOpen(false);
+  }
+
   const applySettings = (settings: SettingsObject) => {
     let newSettings = new SettingsObject(settings.bgColor, settings.lockedIn);
     setSettings(newSettings);
@@ -222,6 +249,8 @@ export default function Home() {
     setIsResetOpen(false);
     setIsGameOverOpen(false);
     setIsCardSelectOpen(false);
+    setIsSignUpOpen(false);
+    setIsSignInOpen(false);
   }
 
   const deal = () => {
@@ -349,8 +378,10 @@ export default function Home() {
 
       <ResetGame isOpen={isResetOpen} closeModal={closeReset} resetGame={resetGame}/>
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
-      <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats}/>
+      <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats} openSignIn={openSignIn}/>
       <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
+      <SignIn isOpen={isSignInOpen} closeModal={closeSignIn}></SignIn>
+      <SignUp isOpen={isSignUpOpen} closeModal={closeSignUp}></SignUp>
       {selectedCard && <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess} selectedCard={selectedCard}/>}
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
                                        iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
