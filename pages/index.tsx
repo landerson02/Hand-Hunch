@@ -16,6 +16,7 @@ import { StatsObject } from "@/objects/stats";
 import {AuthContext} from "@/contexts/AuthContext";
 import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
+import {SettingsContext} from "@/contexts/SettingsContext";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -38,13 +39,21 @@ export default function Home() {
   const [isStatsSaved, setIsStatsSaved] = useState(false);
   const [isGameSaved, setIsGameSaved] = useState(true);
   const [isSettingsSaved, setIsSettingsSaved] = useState(true);
+
   const authContext = useContext(AuthContext);
   if(!authContext) {
     throw new Error("AuthContext is null");
   }
   const { isUserSignedIn, setIsUserSignedIn, isSignInOpen, setIsSignInOpen, isSignUpOpen, setIsSignUpOpen } = authContext;
 
+  const settingsContext = useContext(SettingsContext);
+  if(!settingsContext) {
+    throw new Error("SettingsContext is null");
+  }
+  const {bgColor, setBgColor, lockedIn, setLockedIn} = settingsContext;
+
   const scrollRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     setGame(game);
@@ -87,6 +96,8 @@ export default function Home() {
       const parsed = JSON.parse(settings);
       const newSettings = new SettingsObject("bg-green-700", false);
       Object.assign(newSettings, parsed);
+      setBgColor(parsed.bgColor);
+      setLockedIn(parsed.lockedIn);
       setSettings(newSettings);
     }
   }, []);
@@ -380,7 +391,7 @@ export default function Home() {
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
       <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats} openSignIn={openSignIn}/>
       <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
-      <SignIn isOpen={isSignInOpen} closeModal={closeSignIn}></SignIn>
+      <SignIn isOpen={isSignInOpen} closeModal={closeSignIn} openSignUp={openSignUp}></SignIn>
       <SignUp isOpen={isSignUpOpen} closeModal={closeSignUp}></SignUp>
       {selectedCard && <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess} selectedCard={selectedCard}/>}
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}

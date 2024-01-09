@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { FaFire } from "react-icons/fa6";
-import { motion } from "framer-motion";
+import {AnimatePresence, motion} from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
 import {AuthContext} from "@/contexts/AuthContext";
@@ -28,6 +28,7 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
       padding: 0,
       backgroundColor: 'white', // make the modal solid white
       outline: 'solid 1px black',
+      overflow: 'hidden',
     },
     overlay: {
       backgroundColor: 'transparent', // make the background transparent
@@ -127,8 +128,8 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
           </div>
         </motion.div>
         {!isUserSignedIn && (
-          <div className={'flex gap-1'}>
-            <button onClick={() => openSignIn} className={'ml-2 text-blue-500 hover:underline'}>Sign in</button>
+          <div className={'flex gap-1 justify-center items-center'}>
+            <button onClick={openSignIn} className={'ml-2 text-blue-500 hover:underline'}>Sign in</button>
             <div>to save your data</div>
           </div>
         )}

@@ -8,7 +8,7 @@ type AppProvidersProps = {
 }
 
 const AppProviders: React.FC<AppProvidersProps> = ({children}) => {
-  const [isSignInOpen, setIsSignInOpen] = React.useState<boolean>(true);
+  const [isSignInOpen, setIsSignInOpen] = React.useState<boolean>(false);
   const [isUserSignedIn, setIsUserSignedIn] = React.useState<boolean>(false);
   const [isSignUpOpen, setIsSignUpOpen] = React.useState<boolean>(false);
   const [bgColor, setBgColor] = React.useState<string>('bg-green-700');
