@@ -396,20 +396,20 @@ export default function Home() {
       {selectedCard && <CardSelect isOpen={isCardSelectOpen} closeModal={closeCardSelect} setGuess={onSetGuess} selectedCard={selectedCard}/>}
       {hand[0] && hand[1] && <GameOver isOpen={isGameOverOpen} closeModal={closeGameOver} hand={hand} win={isWin}
                                        iteration={curIteration + 1} resetGame={resetGame} openStats={openStats}/>}
-      <button onClick={deal} className='absolute bottom-0 right-0'>DEAL</button>
-      <button onClick={() => {
-        const newStats = new StatsObject();
-        // newStats.guessArray = [1, 3, 5, 2, 6, 1];
-        // newStats.wins = 18;
-        // newStats.losses = 2;
-        // newStats.strongestHand = 'Royal Flush';
-        // newStats.games = 20;
-        // newStats.winPercentage = 0.9;
-        // newStats.longestStreak = 10;
-        // newStats.currentStreak = 5;
-        setStats(newStats);
-        localStorage.setItem('stats', JSON.stringify(newStats));
-      }} className='absolute bottom-0 left-0'>RESET</button>
+      {/*<button onClick={deal} className='absolute bottom-0 right-0'>DEAL</button>*/}
+      {/*<button onClick={() => {*/}
+      {/*  const newStats = new StatsObject();*/}
+      {/*  // newStats.guessArray = [1, 3, 5, 2, 6, 1];*/}
+      {/*  // newStats.wins = 18;*/}
+      {/*  // newStats.losses = 2;*/}
+      {/*  // newStats.strongestHand = 'Royal Flush';*/}
+      {/*  // newStats.games = 20;*/}
+      {/*  // newStats.winPercentage = 0.9;*/}
+      {/*  // newStats.longestStreak = 10;*/}
+      {/*  // newStats.currentStreak = 5;*/}
+        {/*setStats(newStats);*/}
+        {/*localStorage.setItem('stats', JSON.stringify(newStats));*/}
+      {/*}} className='absolute bottom-0 left-0'>RESET</button>*/}
     </div>
   )
 }
