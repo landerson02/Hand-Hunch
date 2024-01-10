@@ -19,6 +19,7 @@ import SignUp from "@/components/SignUp";
 import {SettingsContext} from "@/contexts/SettingsContext";
 import {UserContext} from "@/contexts/userContext";
 import {updateStats} from "@/lib/userService";
+import {StatsContext} from "@/contexts/StatsContext";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -33,7 +34,7 @@ export default function Home() {
   const [isGameOverOpen, setIsGameOverOpen] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isStatsOpen, setIsStatsOpen] = useState(false);
-  const [stats, setStats] = useState<StatsObject>(new StatsObject());
+  // const [stats, setStats] = useState<StatsObject>(new StatsObject());
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settings, setSettings]
     = useState<SettingsObject>(new SettingsObject("bg-green-700", false));
@@ -60,6 +61,12 @@ export default function Home() {
   const {setBgColor, setLockedIn} = settingsContext;
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const statsContext = useContext(StatsContext);
+  if(!statsContext) {
+    throw new Error("StatsContext is null");
+  }
+  const { stats, setStats } = statsContext;
 
 
   useEffect(() => {
@@ -91,7 +98,6 @@ export default function Home() {
         const newStats = new StatsObject();
         Object.assign(newStats, parsed);
         setStats(newStats);
-        setUserStats(newStats);
       }
     }
   }, [isLoggedIn]);
@@ -109,7 +115,7 @@ export default function Home() {
         setIsStatsSaved(true);
       }
     }
-  }, [isGameOver, stats, isLoggedIn, username, isStatsSaved]);
+  }, [isGameOver, stats, username, isStatsSaved]);
 
   // Load settings
   useEffect(() => {
@@ -337,14 +343,24 @@ export default function Home() {
   }
 
   const resetGame = () => {
-    if (!isGameOver) {
-      const newStats = new StatsObject();
-      Object.assign(newStats, stats);
-      newStats.updateStats(false, curIteration);
-      setStats(newStats);
-      setUserStats(newStats);
-      localStorage.setItem('stats', JSON.stringify(newStats));
-      setIsStatsSaved(true);
+    if(isLoggedIn) {
+      if(!isGameOver) {
+        const newStats = new StatsObject();
+        Object.assign(newStats, userStats);
+        newStats.updateStats(false, curIteration);
+        setStats(newStats);
+        setUserStats(newStats);
+      }
+    } else {
+      if (!isGameOver) {
+        const newStats = new StatsObject();
+        Object.assign(newStats, stats);
+        newStats.updateStats(false, curIteration);
+        setStats(newStats);
+        setUserStats(newStats);
+        localStorage.setItem('stats', JSON.stringify(newStats));
+        setIsStatsSaved(true);
+      }
     }
     const newGame = new Game();
     setGame(newGame);
@@ -414,7 +430,7 @@ export default function Home() {
 
       <ResetGame isOpen={isResetOpen} closeModal={closeReset} resetGame={resetGame}/>
       <Help isOpen={isHelpOpen} closeModal={closeHelp}/>
-      <Stats isOpen={isStatsOpen} closeModal={closeStats} stats={stats} openSignIn={openSignIn}/>
+      <Stats isOpen={isStatsOpen} closeModal={closeStats} openSignIn={openSignIn}/>
       <Settings isOpen={isSettingsOpen} closeModal={closeSettings} applySettings={applySettings} curSettings={settings}/>
       <SignIn isOpen={isSignInOpen} closeModal={closeSignIn} openSignUp={openSignUp}></SignIn>
       <SignUp isOpen={isSignUpOpen} closeModal={closeSignUp}></SignUp>

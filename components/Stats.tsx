@@ -6,21 +6,31 @@ import {motion} from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
 import {UserContext} from "@/contexts/userContext";
+import {StatsContext} from "@/contexts/StatsContext";
 
 type StatsProps = {
   isOpen: boolean,
   closeModal: () => void,
-  stats: StatsObject
   openSignIn: () => void,
 }
 
-const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } : StatsProps) => {
+const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, openSignIn } : StatsProps) => {
   const userContext = useContext(UserContext);
   const { isLoggedIn, setIsLoggedIn, username, setUsername, setPassword, setUserStats, userStats } = userContext;
+  const statsContext = useContext(StatsContext);
+  const { stats, setStats } = statsContext;
 
   useEffect(() => {
     if(isLoggedIn) {
-      stats = userStats;
+      setStats(userStats);
+    } else {
+      const stats = localStorage.getItem('stats');
+      if(stats) {
+        const parsed = JSON.parse(stats);
+        const newStats = new StatsObject();
+        Object.assign(newStats, parsed);
+        setStats(newStats);
+      }
     }
   }, [isLoggedIn]);
 
@@ -43,6 +53,7 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
 
 
   const signOut = () => {
+    // Reset user data
     setIsLoggedIn(false);
     setUsername('');
     setPassword('');
