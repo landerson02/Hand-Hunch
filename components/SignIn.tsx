@@ -64,7 +64,7 @@ const SignIn: React.FC<SignInProps> = ({ isOpen, closeModal, openSignUp } : Sign
   const [isWrongPassword, setIsWrongPassword] = useState<boolean>(false);
 
   const userContext = useContext(UserContext);
-  const { isLoggedIn, setIsLoggedIn, setUsername, setPassword, setUserStats } = userContext;
+  const { setIsLoggedIn, setUsername, setPassword, setUserStats } = userContext;
 
   const handleChange = (e: { target: { value: string; name: string; }; }) => {
     const value = e.target.value;

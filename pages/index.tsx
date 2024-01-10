@@ -19,7 +19,6 @@ import SignUp from "@/components/SignUp";
 import {SettingsContext} from "@/contexts/SettingsContext";
 import {UserContext} from "@/contexts/userContext";
 import {updateStats} from "@/lib/userService";
-import Head from "next/head";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -52,13 +51,13 @@ export default function Home() {
   if(!userContext) {
     throw new Error("UserContext is null");
   }
-  const { isLoggedIn, setIsLoggedIn, username, setUsername, setPassword, setUserStats, userStats } = userContext;
+  const { isLoggedIn, username, setUserStats, userStats } = userContext;
 
   const settingsContext = useContext(SettingsContext);
   if(!settingsContext) {
     throw new Error("SettingsContext is null");
   }
-  const {bgColor, setBgColor, lockedIn, setLockedIn} = settingsContext;
+  const {setBgColor, setLockedIn} = settingsContext;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 

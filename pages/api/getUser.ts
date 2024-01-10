@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
 
-interface userName_t {
-  username: string;
-}
 export default async function getUser(req: NextApiRequest, res: NextApiResponse) {
   const { username } = req.query;
   try {

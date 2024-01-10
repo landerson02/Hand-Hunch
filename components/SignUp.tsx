@@ -80,7 +80,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
   };
 
   const userContext = useContext(UserContext);
-  const { isLoggedIn, setIsLoggedIn, setUsername, setPassword, setUserStats } = userContext;
+  const { setIsLoggedIn, setUsername, setPassword, setUserStats } = userContext;
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
