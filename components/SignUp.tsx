@@ -3,7 +3,8 @@ import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
-import {light} from "@mui/material/styles/createPalette";
+import { addUser } from '@/lib/userService'
+import localFont from "@next/font/local";
 
 type SignUpProps = {
   isOpen: boolean,
@@ -59,6 +60,47 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
   // bg-pink-300
   // bg-grey-900
 
+  const baseUserData = {
+    username: '',
+    password: '',
+  };
+
+  const [formData, setFormData] = React.useState(baseUserData);
+
+  const handleChange = (e: { target: { value: string; name: string; }; }) => {
+    const value = e.target.value;
+    const name = e.target.name;
+
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  // @ts-ignore
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const newUser = await addUser(formData.username, formData.password);
+    } catch (e) {
+      console.error('fuck', e);
+    }
+  };
+
+  // let handleSubmit = async (e) => {
+  //   // setLoading(true);
+  //   e.preventDefault();
+  //   let res = await fetch("/api/post", {
+  //     method: "POST",
+  //     body: JSON.stringify({formData}),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   res = await res.json();
+  //   // setPostsState([...postsState, res]);
+  //   setFormData(baseUserData);
+  // };
 
   return (
     <Modal
@@ -80,7 +122,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
         <div className='font-medium md:text-4xl text-3xl'>Sign Up</div>
 
         <div className='w-[90%] h-[75%]'>
-          <form className="flex flex-col space-y-4">
+          <form className="flex flex-col space-y-4" method={"post"} onSubmit={handleSubmit}>
             <label htmlFor="username" className="text-lg font-medium">
               Username
             </label>
@@ -90,6 +132,8 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
               type="text"
               autoComplete="username"
               required
+              onChange={handleChange}
+              value={formData.username}
               className={`px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-${lighterBgColor} focus:border-${lighterBgColor}`}
             />
             <label htmlFor="password" className="text-lg font-medium">
@@ -101,6 +145,8 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
               type="password"
               autoComplete="current-password"
               required
+              onChange={handleChange}
+              value={formData.password}
               className={`px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-${lighterBgColor} focus:border-${lighterBgColor}`}
             />
             <button
