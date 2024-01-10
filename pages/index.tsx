@@ -85,7 +85,6 @@ export default function Home() {
       Object.assign(newStats, userStats);
       setStats(newStats);
     } else {
-      console.log('lseffect')
       const stats = localStorage.getItem('stats');
       if(stats) {
         const parsed = JSON.parse(stats);
@@ -95,13 +94,12 @@ export default function Home() {
         setUserStats(newStats);
       }
     }
-  }, [isLoggedIn, setUserStats, userStats]);
+  }, [isLoggedIn]);
 
   // Save stats
   useEffect(() => {
     if(isLoggedIn) {
       updateStats(username, stats).then((res) => {
-        console.log('doin  sum')
         res.status === 200 ? setIsStatsSaved(true) : setIsStatsSaved(false);
       });
 
@@ -110,8 +108,6 @@ export default function Home() {
         localStorage.setItem('stats', JSON.stringify(stats));
         setIsStatsSaved(true);
       }
-      console.log('SAVED')
-      console.log(stats);
     }
   }, [isGameOver, stats, isLoggedIn, username, isStatsSaved]);
 

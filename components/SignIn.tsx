@@ -93,7 +93,6 @@ const SignIn: React.FC<SignInProps> = ({ isOpen, closeModal, openSignUp } : Sign
       setIsWrongPassword(false);
       setIsWrongUsername(false);
       const user = data.user;
-      console.log('data', data)
       if(!user) {
         // console.log('incorrect username or password');
         return;

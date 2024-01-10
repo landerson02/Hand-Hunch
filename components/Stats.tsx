@@ -19,9 +19,6 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
   const { isLoggedIn, setIsLoggedIn, username, setUsername, setPassword, setUserStats, userStats } = userContext;
 
   useEffect(() => {
-    console.log('stats1: ', stats)
-    console.log(isLoggedIn)
-    console.log('usersts: ', userStats);
     if(isLoggedIn) {
       stats = userStats;
     }
