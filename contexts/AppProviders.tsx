@@ -1,6 +1,7 @@
-import {AuthContext} from "@/contexts/AuthContext";
 import React from "react";
-import {SettingsContext} from "@/contexts/SettingsContext";
+import AuthProvider from "@/contexts/AuthContext";
+import SettingsProvider from "@/contexts/SettingsContext";
+import UserProvider from "@/contexts/userContext";
 
 
 type AppProvidersProps = {
@@ -8,18 +9,15 @@ type AppProvidersProps = {
 }
 
 const AppProviders: React.FC<AppProvidersProps> = ({children}) => {
-  const [isSignInOpen, setIsSignInOpen] = React.useState<boolean>(false);
-  const [isUserSignedIn, setIsUserSignedIn] = React.useState<boolean>(false);
-  const [isSignUpOpen, setIsSignUpOpen] = React.useState<boolean>(false);
-  const [bgColor, setBgColor] = React.useState<string>('bg-green-700');
-  const [lockedIn, setLockedIn] = React.useState<boolean>(true);
 
   return (
-    <SettingsContext.Provider value={{bgColor, setBgColor, lockedIn, setLockedIn}}>
-      <AuthContext.Provider value={{isSignInOpen, setIsSignInOpen, isUserSignedIn, setIsUserSignedIn, isSignUpOpen, setIsSignUpOpen}}>
-        {children}
-      </AuthContext.Provider>
-    </SettingsContext.Provider>
+    <UserProvider>
+      <AuthProvider>
+        <SettingsProvider>
+          {children}
+        </SettingsProvider>
+      </AuthProvider>
+    </UserProvider>
   )
 }
 

@@ -24,7 +24,7 @@ const Board = ({board, boardCount}: BoardProps) => {
       }
     }, 250);
     return () => clearInterval(flipInterval);
-  }, [board]);
+  }, [board, flippedCards]);
 
   return (
     <div className='w-full'>

@@ -17,6 +17,9 @@ import {AuthContext} from "@/contexts/AuthContext";
 import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import {SettingsContext} from "@/contexts/SettingsContext";
+import {UserContext} from "@/contexts/userContext";
+import {updateStats} from "@/lib/userService";
+import Head from "next/head";
 
 export default function Home() {
   const [game, setGame] = useState<Game>(new Game());
@@ -44,7 +47,12 @@ export default function Home() {
   if(!authContext) {
     throw new Error("AuthContext is null");
   }
-  const { isUserSignedIn, setIsUserSignedIn, isSignInOpen, setIsSignInOpen, isSignUpOpen, setIsSignUpOpen } = authContext;
+  const { isSignInOpen, setIsSignInOpen, isSignUpOpen, setIsSignUpOpen } = authContext;
+  const userContext = useContext(UserContext);
+  if(!userContext) {
+    throw new Error("UserContext is null");
+  }
+  const { isLoggedIn, setIsLoggedIn, username, setUsername, setPassword, setUserStats, userStats } = userContext;
 
   const settingsContext = useContext(SettingsContext);
   if(!settingsContext) {
@@ -60,7 +68,7 @@ export default function Home() {
     setBoards(game.boards);
     // setGuesses(game.guesses);
     setHand(game.hand.cards);
-  }, []);
+  }, [game]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -70,24 +78,43 @@ export default function Home() {
     }
   }, [boards]);
 
+
   // Load stats
   useEffect(() => {
-    const stats = localStorage.getItem('stats');
-    if(stats) {
-      const parsed = JSON.parse(stats);
+    if(isLoggedIn) {
       const newStats = new StatsObject();
-      Object.assign(newStats, parsed);
+      Object.assign(newStats, userStats);
       setStats(newStats);
+    } else {
+      console.log('lseffect')
+      const stats = localStorage.getItem('stats');
+      if(stats) {
+        const parsed = JSON.parse(stats);
+        const newStats = new StatsObject();
+        Object.assign(newStats, parsed);
+        setStats(newStats);
+        setUserStats(newStats);
+      }
     }
-  }, []);
+  }, [isLoggedIn, setUserStats, userStats]);
 
   // Save stats
   useEffect(() => {
-    if(isGameOver && !isStatsSaved) {
-      localStorage.setItem('stats', JSON.stringify(stats));
-      setIsStatsSaved(true);
+    if(isLoggedIn) {
+      updateStats(username, stats).then((res) => {
+        console.log('doin  sum')
+        res.status === 200 ? setIsStatsSaved(true) : setIsStatsSaved(false);
+      });
+
+    } else {
+      if(isGameOver && !isStatsSaved) {
+        localStorage.setItem('stats', JSON.stringify(stats));
+        setIsStatsSaved(true);
+      }
+      console.log('SAVED')
+      console.log(stats);
     }
-  }, [isGameOver, stats]);
+  }, [isGameOver, stats, isLoggedIn, username, isStatsSaved]);
 
   // Load settings
   useEffect(() => {
@@ -100,7 +127,7 @@ export default function Home() {
       setLockedIn(parsed.lockedIn);
       setSettings(newSettings);
     }
-  }, []);
+  }, [setBgColor, setLockedIn]);
 
   // Save settings
   useEffect(() => {
@@ -108,7 +135,7 @@ export default function Home() {
       localStorage.setItem('settings', JSON.stringify(settings));
       setIsSettingsSaved(true);
     }
-  }, [settings]);
+  }, [settings, isSettingsSaved]);
 
   // Load current game
   useEffect(() => {
@@ -275,6 +302,7 @@ export default function Home() {
       Object.assign(newStats, stats);
       newStats.updateStats(true, curIteration);
       setStats(newStats);
+      setUserStats(newStats);
       return;
     }
     if (curIteration == 5) {
@@ -286,6 +314,7 @@ export default function Home() {
       Object.assign(newStats, stats);
       newStats.updateStats(false, curIteration);
       setStats(newStats);
+      setUserStats(newStats);
       return;
     }
     guess.current = false;
@@ -318,6 +347,7 @@ export default function Home() {
       Object.assign(newStats, stats);
       newStats.updateStats(false, curIteration);
       setStats(newStats);
+      setUserStats(newStats);
       localStorage.setItem('stats', JSON.stringify(newStats));
       setIsStatsSaved(true);
     }

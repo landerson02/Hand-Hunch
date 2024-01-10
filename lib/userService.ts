@@ -1,4 +1,6 @@
-export async function addUser(username: string, password: string) {
+import {StatsObject} from "@/objects/stats";
+
+export async function addUser(username: string, password: string, userStats: StatsObject) {
   const existingUser = await getUser(username);
   if(existingUser.message === 'Username is already taken!') {
     console.log('Username is already taken!');
@@ -13,7 +15,7 @@ export async function addUser(username: string, password: string) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({username, password, userStats}),
     });
 
     if(!res.ok) {
@@ -40,9 +42,9 @@ export async function signIn(username: string, password: string) {
 
     if(!res.ok) {
       console.log('failed to sign in user!!!!!!!!!');
+      return null;
     }
-    const data = await res.json();
-    return data.user;
+    return await res.json();
   } catch (e) {
     console.error('Failed to sign in user', e);
   }
@@ -60,6 +62,27 @@ export async function getUser(username: string) {
     return await res.json();
   } catch (e) {
     console.error('Failed to get user', e);
+  }
+}
+
+export async function updateStats(username: string, userStats: StatsObject) {
+  const url = '/api/updateStats';
+
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username, userStats}),
+    });
+
+    if(!res.ok) {
+      console.log('failed to update stats!!!!!!!');
+    }
+    return await res.json();
+  } catch (e) {
+    console.error('Failed to update stats', e);
   }
 }
 

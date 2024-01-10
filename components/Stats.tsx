@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
+import React, { useContext, useEffect } from 'react';
 import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { FaFire } from "react-icons/fa6";
-import {AnimatePresence, motion} from "framer-motion";
+import {motion} from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
-import {AuthContext} from "@/contexts/AuthContext";
+import {UserContext} from "@/contexts/userContext";
 
 type StatsProps = {
   isOpen: boolean,
@@ -15,8 +15,17 @@ type StatsProps = {
 }
 
 const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } : StatsProps) => {
-  const authContext = useContext(AuthContext);
-  const isUserSignedIn = authContext?.isUserSignedIn;
+  const userContext = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn, username, setUsername, setPassword, setUserStats, userStats } = userContext;
+
+  useEffect(() => {
+    console.log('stats1: ', stats)
+    console.log(isLoggedIn)
+    console.log('usersts: ', userStats);
+    if(isLoggedIn) {
+      stats = userStats;
+    }
+  }, [isLoggedIn]);
 
   const customStyles = {
     content: {
@@ -34,6 +43,14 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
       backgroundColor: 'transparent', // make the background transparent
     },
   };
+
+
+  const signOut = () => {
+    setIsLoggedIn(false);
+    setUsername('');
+    setPassword('');
+    setUserStats(new StatsObject());
+  }
 
   return (
     <Modal
@@ -127,10 +144,15 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, stats, openSignIn } :
             </motion.div>
           </div>
         </motion.div>
-        {!isUserSignedIn && (
+        {!isLoggedIn ? (
           <div className={'flex gap-1 justify-center items-center'}>
             <button onClick={openSignIn} className={'ml-2 text-blue-500 hover:underline'}>Sign in</button>
             <div>to save your data</div>
+          </div>
+        ) : (
+          <div className={'flex gap-12 justify-center items-center'}>
+            <div>Signed in as: {username}</div>
+            <button onClick={signOut} className={'ml-2 text-blue-500 hover:underline'}>Sign Out</button>
           </div>
         )}
       </motion.div>

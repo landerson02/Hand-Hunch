@@ -4,6 +4,8 @@ import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
 import {addUser, getUser, signIn} from '@/lib/userService'
+import { UserContext } from "@/contexts/userContext";
+import {StatsObject} from "@/objects/stats";
 
 type SignUpProps = {
   isOpen: boolean,
@@ -77,6 +79,9 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
     }));
   };
 
+  const userContext = useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn, setUsername, setPassword, setUserStats } = userContext;
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
@@ -86,8 +91,13 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
         return;
       }
       setIsUsernameTaken(false);
-      await addUser(formData.username, formData.password);
+      const newStats = new StatsObject();
+      await addUser(formData.username, formData.password, newStats);
       await signIn(formData.username, formData.password);
+      setIsLoggedIn(true);
+      setUsername(formData.username);
+      setPassword(formData.password);
+      setUserStats(newStats);
       closeModal();
     } catch (e) {
       console.error('failed to add user', e);

@@ -42,10 +42,10 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
       </motion.button>
       <div className={"flex flex-col items-center justify-between p-2 h-full"}>
         <div className={"md:text-4xl text-3xl font-medium"}>Help</div>
-        <div className={"flex-col w-[95%] h-[90%] overflow-y-scroll mb-2"}>
+        <div className={"flex-col w-[95%] h-[90%] overflow-y-scroll mb-2 pr-3 pl-1"}>
           <div className={"md:text-xl font-semibold text-center"}>Welcome to Hand Hunch!</div>
           <div className={"md:text-xl"}>Hand Hunch is a poker-inspired game where your goal is to guess the
-            mystery Texas Hold'em hand consisting of two cards, based on the available information. Are you ready to
+            mystery Texas Hold&apos;em hand consisting of two cards, based on the available information. Are you ready to
             showcase your poker skills and deduction prowess?</div>
           <br></br>
           <div className={"md:text-xl font-semibold text-center"}>How to Play</div>
@@ -60,7 +60,7 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
           <div className={"md:text-xl"}>
             <div className={"font-semibold inline"}>
               2. Assessing Guesses:
-            </div> Once you've submitted your guess, the game provides feedback:
+            </div> Once you&apos;ve submitted your guess, the game provides feedback:
             <ul className={"list-disc list-inside md:pl-10 pl-5"}>
               <li className={"md:text-xl"}>
                 <div className={"font-semibold inline text-green-800"}>
@@ -75,7 +75,7 @@ const Help: React.FC<HelpProps> = ({ isOpen, closeModal } : HelpProps) => {
               <li className={"md:text-xl"}>
                 <div className={"font-semibold inline text-red-600"}>
                 Red:
-              </div> If the card you guessed doesn't match either the suit or value of
+              </div> If the card you guessed matches neither the suit <u>nor</u> value of
                 one of the mystery cards, it will turn red.</li>
             </ul>
           </div>
