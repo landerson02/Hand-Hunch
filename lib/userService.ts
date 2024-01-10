@@ -11,7 +11,7 @@ export async function addUser(username: string, password: string) {
     });
 
     if(!res.ok) {
-      throw new Error('failed to add user!!!!!!!!!!');
+      console.log('failed to add user!!!!!!!!!');
     }
     const data = await res.json();
     return data.user;

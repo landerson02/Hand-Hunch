@@ -4,7 +4,6 @@ import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
 import { addUser } from '@/lib/userService'
-import localFont from "@next/font/local";
 
 type SignUpProps = {
   isOpen: boolean,
@@ -81,7 +80,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const newUser = await addUser(formData.username, formData.password);
+      await addUser(formData.username, formData.password);
     } catch (e) {
       console.error('fuck', e);
     }

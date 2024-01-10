@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-// import { connectToDatabase } from '@/lib/mongodb';
 import clientPromise from '@/lib/mongodb'
 
 interface User {
@@ -21,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const insertedUser = await usersCollection.findOne({ _id: newUser.insertedId });
       res.status(201).json({ message: 'User added!', user: insertedUser });
     } else {
-      throw new Error('User insertion failed');
+      console.log('failed to add user');
     }
   } catch (error) {
     console.error('Error adding user:', error);
