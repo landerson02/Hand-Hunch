@@ -10,7 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { username, password } = req.body as User;
 
   try {
-    // const db = await connectToDatabase();
     const client = await clientPromise;
     const db = client.db('HandHunch');
     const usersCollection = db.collection('users');

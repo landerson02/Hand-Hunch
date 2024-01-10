@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
-import { addUser } from '@/lib/userService'
+import {addUser, getUser, signIn} from '@/lib/userService'
 
 type SignUpProps = {
   isOpen: boolean,
@@ -65,6 +65,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
   };
 
   const [formData, setFormData] = React.useState(baseUserData);
+  const [isUsernameTaken, setIsUsernameTaken] = React.useState<boolean>(false);
 
   const handleChange = (e: { target: { value: string; name: string; }; }) => {
     const value = e.target.value;
@@ -76,30 +77,23 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
     }));
   };
 
-  // @ts-ignore
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
+      const user = await getUser(formData.username);
+      if(user.message === 'Username is already taken!') {
+        setIsUsernameTaken(true);
+        return;
+      }
+      setIsUsernameTaken(false);
       await addUser(formData.username, formData.password);
+      await signIn(formData.username, formData.password);
+      closeModal();
     } catch (e) {
-      console.error('fuck', e);
+      console.error('failed to add user', e);
     }
   };
 
-  // let handleSubmit = async (e) => {
-  //   // setLoading(true);
-  //   e.preventDefault();
-  //   let res = await fetch("/api/post", {
-  //     method: "POST",
-  //     body: JSON.stringify({formData}),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   res = await res.json();
-  //   // setPostsState([...postsState, res]);
-  //   setFormData(baseUserData);
-  // };
 
   return (
     <Modal
@@ -123,7 +117,7 @@ const SignUp: React.FC<SignUpProps> = ({ isOpen, closeModal } : SignUpProps) => 
         <div className='w-[90%] h-[75%]'>
           <form className="flex flex-col space-y-4" method={"post"} onSubmit={handleSubmit}>
             <label htmlFor="username" className="text-lg font-medium">
-              Username
+              Username {isUsernameTaken && <span className={"text-red-600"}>is already taken!</span>}
             </label>
             <input
               id="username"
