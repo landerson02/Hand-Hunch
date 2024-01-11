@@ -58,6 +58,13 @@ const Stats: React.FC<StatsProps> = ({ isOpen, closeModal, openSignIn } : StatsP
     setUsername('');
     setPassword('');
     setUserStats(new StatsObject());
+    const localStats = localStorage.getItem('stats');
+    if(localStats) {
+      const parsed = JSON.parse(localStats);
+      const newStats = new StatsObject();
+      Object.assign(newStats, parsed);
+      setStats(newStats);
+    }
   }
 
   return (

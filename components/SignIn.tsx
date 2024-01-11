@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
 import { signIn } from '@/lib/userService'
 import { UserContext } from "@/contexts/UserContext";
+import {StatsContext} from "@/contexts/StatsContext";
+import {StatsObject} from "@/objects/stats";
 
 
 type SignInProps = {
@@ -77,6 +79,10 @@ const SignIn: React.FC<SignInProps> = ({ isOpen, closeModal, openSignUp } : Sign
     }));
   };
 
+  const statsContext = useContext(StatsContext);
+  const { setStats } = statsContext;
+
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     const { username, password } = formData;
@@ -94,15 +100,15 @@ const SignIn: React.FC<SignInProps> = ({ isOpen, closeModal, openSignUp } : Sign
       setIsWrongPassword(false);
       setIsWrongUsername(false);
       const user = data.user;
-      if(!user) {
-        // console.log('incorrect username or password');
-        return;
-      }
       if(user) {
         setIsLoggedIn(true);
         setUsername(username);
         setPassword(password);
-        setUserStats(user.userStats);
+        // parse userstats to a stats object
+        const newStats = new StatsObject();
+        Object.assign(newStats, user.userStats);
+        setUserStats(newStats);
+        setStats(newStats);
 
         closeModal();
       } else {
