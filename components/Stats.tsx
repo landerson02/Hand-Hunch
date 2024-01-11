@@ -5,7 +5,7 @@ import { FaFire } from "react-icons/fa6";
 import {motion} from "framer-motion";
 import { StatsObject } from "@/objects/stats";
 import { BarChart } from '@mui/x-charts/BarChart';
-import {UserContext} from "@/contexts/userContext";
+import {UserContext} from "@/contexts/UserContext";
 import {StatsContext} from "@/contexts/StatsContext";
 
 type StatsProps = {

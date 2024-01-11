@@ -17,7 +17,7 @@ import {AuthContext} from "@/contexts/AuthContext";
 import SignIn from "@/components/SignIn";
 import SignUp from "@/components/SignUp";
 import {SettingsContext} from "@/contexts/SettingsContext";
-import {UserContext} from "@/contexts/userContext";
+import {UserContext} from "@/contexts/UserContext";
 import {updateStats} from "@/lib/userService";
 import {StatsContext} from "@/contexts/StatsContext";
 

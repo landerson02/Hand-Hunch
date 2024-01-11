@@ -1,7 +1,7 @@
 import React from "react";
 import AuthProvider from "@/contexts/AuthContext";
 import SettingsProvider from "@/contexts/SettingsContext";
-import UserProvider from "@/contexts/userContext";
+import UserProvider from "@/contexts/UserContext";
 import StatsProvider from "@/contexts/StatsContext";
 
 

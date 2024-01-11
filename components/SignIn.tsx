@@ -4,7 +4,8 @@ import { IoIosClose } from "react-icons/io";
 import { motion } from "framer-motion";
 import { SettingsContext } from "@/contexts/SettingsContext";
 import { signIn } from '@/lib/userService'
-import {UserContext} from "@/contexts/userContext";
+import { UserContext } from "@/contexts/UserContext";
+
 
 type SignInProps = {
   isOpen: boolean,
