@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Modal from 'react-modal';
 import { IoIosClose } from "react-icons/io";
 import { BsSuitSpadeFill, BsSuitClubFill, BsSuitDiamondFill, BsSuitHeartFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import {CardType} from "@/objects/types";
+import { SettingsContext } from "@/contexts/SettingsContext";
 
 type CardSelectProps = {
   isOpen: boolean,
@@ -47,11 +48,38 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
       backgroundColor: 'transparent', // make the background transparent
     },
   };
-  const unselected = 'border-2 rounded-md border-black border-opacity-0'
-  const selected = 'border-2 rounded-md border-black bg-green-300 border-opacity-40'
-  // const hover = 'hover:bg-green-200 hover:border-opacity-40'
-  const hover = 'hover:scale-110 transition duration-200 ease-in-out'
-  const moveUp = 'transform hover:translate-y-[-4px] transition duration-200 ease-in-out'
+  const settingsContext = React.useContext(SettingsContext);
+  if(!settingsContext) throw new Error("SettingsContext is null");
+  const { bgColor } = settingsContext;
+  // bg-gray-800
+  const unselected = 'border-2 rounded-md border-black border-opacity-0';
+  let lightColor;
+  switch (bgColor) {
+    case 'bg-red-900':
+      lightColor = 'bg-red-300';
+      break;
+    case 'bg-green-700':
+      lightColor = 'bg-green-300';
+      break;
+    case 'bg-blue-900':
+      lightColor = 'bg-blue-300';
+      break;
+    case 'bg-purple-900':
+      lightColor = 'bg-purple-300';
+      break;
+    case 'bg-pink-300':
+      lightColor = 'bg-pink-200';
+      break;
+    case 'bg-gray-900':
+      lightColor = 'bg-gray-300 ';
+      break;
+    default:
+      throw new Error("bgColor is not a valid color");
+  }
+  const selected = 'border-2 rounded-md border-black border-opacity-40 ' + lightColor;
+  // const hover = 'hover:bg-green-200 hover:border-opacity-40';
+  const hover = 'hover:scale-110 transition duration-200 ease-in-out';
+  const moveUp = 'transform hover:translate-y-[-4px] transition duration-200 ease-in-out';
   return (
     <Modal
       style={customStyles}
@@ -131,13 +159,21 @@ const CardSelect: React.FC<CardSelectProps> = ({ isOpen, closeModal, setGuess, s
           </div>
           {warning ? <div className={"text-red-600 text-xs pt-2"}>Select a Suit and Value</div> : null}
         </div>
-        <button
+        <motion.button
+          whileHover={
+            bgColor==='bg-gray-900' ? { backgroundColor: '#D1D5DB', transition: { duration: 0.2 } }
+            : bgColor==='bg-red-900' ? { backgroundColor: '#FCA5A5', transition: { duration: 0.2 } }
+              : bgColor==='bg-green-700' ? { backgroundColor: '#86EFAC', transition: { duration: 0.2 }}
+                : bgColor==='bg-blue-900' ? { backgroundColor: '#93C5FD', transition: { duration: 0.2 }}
+                  : bgColor==='bg-purple-900' ? { backgroundColor: '#D8B4FE', transition: { duration: 0.2 }}
+                      :{ backgroundColor: '#FBCFE8', transition: { duration: 0.2 }}}
+          whileTap={{ scale: 0.9 }}
           onClick={onSelect}
-          className={"md:text-2xl text-xl text-black font-bold hover:bg-green-600 " +
-            "border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-green-500"}
+          className={`md:text-2xl text-xl text-black font-bold
+            border-2 border-black rounded-md pl-2 pr-2 pt-1 pb-1 bg-white-100`}
         >
           Select
-        </button>
+        </motion.button>
       </motion.div>
     </Modal>
   );
